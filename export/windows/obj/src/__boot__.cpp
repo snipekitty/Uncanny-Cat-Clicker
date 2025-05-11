@@ -1114,12 +1114,6 @@
 #ifndef INCLUDED_flixel_animation_FlxPrerotatedAnimation
 #include <flixel/animation/FlxPrerotatedAnimation.h>
 #endif
-#ifndef INCLUDED_flixel_FlxSprite
-#include <flixel/FlxSprite.h>
-#endif
-#ifndef INCLUDED_flixel_FlxObject
-#include <flixel/FlxObject.h>
-#endif
 #ifndef INCLUDED_flixel_system_FlxSplash
 #include <flixel/system/FlxSplash.h>
 #endif
@@ -1159,9 +1153,6 @@
 #ifndef INCLUDED_haxe_SysTools
 #include <haxe/SysTools.h>
 #endif
-#ifndef INCLUDED_flixel_FlxBasic
-#include <flixel/FlxBasic.h>
-#endif
 #ifndef INCLUDED_openfl_text_Font
 #include <openfl/text/Font.h>
 #endif
@@ -1182,6 +1173,15 @@
 #endif
 #ifndef INCLUDED___ASSET__flixel_sounds_beep_ogg
 #include <__ASSET__flixel_sounds_beep_ogg.h>
+#endif
+#ifndef INCLUDED_flixel_FlxSprite
+#include <flixel/FlxSprite.h>
+#endif
+#ifndef INCLUDED_flixel_FlxObject
+#include <flixel/FlxObject.h>
+#endif
+#ifndef INCLUDED_flixel_FlxBasic
+#include <flixel/FlxBasic.h>
 #endif
 #ifndef INCLUDED_AssetPaths
 #include <AssetPaths.h>
@@ -3136,9 +3136,6 @@
 #ifndef INCLUDED_flixel_group_FlxTypedGroup
 #include <flixel/group/FlxTypedGroup.h>
 #endif
-#ifndef INCLUDED_flixel_util_IFlxDestroyable
-#include <flixel/util/IFlxDestroyable.h>
-#endif
 #ifndef INCLUDED___ASSET__OPENFL__flixel_fonts_monsterrat_ttf
 #include <__ASSET__OPENFL__flixel_fonts_monsterrat_ttf.h>
 #endif
@@ -3168,6 +3165,12 @@
 #endif
 #ifndef INCLUDED_Date
 #include <Date.h>
+#endif
+#ifndef INCLUDED_CatClicker
+#include <CatClicker.h>
+#endif
+#ifndef INCLUDED_flixel_util_IFlxDestroyable
+#include <flixel/util/IFlxDestroyable.h>
 #endif
 #ifndef INCLUDED_DocumentClass
 #include <DocumentClass.h>
@@ -3592,8 +3595,6 @@ __files__boot();
 ::flixel::graphics::FlxGraphic_obj::__register();
 ::flixel::effects::FlxFlicker_obj::__register();
 ::flixel::animation::FlxPrerotatedAnimation_obj::__register();
-::flixel::FlxSprite_obj::__register();
-::flixel::FlxObject_obj::__register();
 ::flixel::_hx_system::FlxSplash_obj::__register();
 ::flixel::FlxG_obj::__register();
 ::flixel::util::FlxSave_obj::__register();
@@ -3607,7 +3608,6 @@ __files__boot();
 ::flixel::math::FlxBasePoint_obj::__register();
 ::Xml_obj::__register();
 ::haxe::SysTools_obj::__register();
-::flixel::FlxBasic_obj::__register();
 ::openfl::text::Font_obj::__register();
 ::__ASSET__flixel_images_logo_default_png_obj::__register();
 ::__ASSET__flixel_images_ui_button_png_obj::__register();
@@ -3615,6 +3615,9 @@ __files__boot();
 ::__ASSET__flixel_fonts_nokiafc22_ttf_obj::__register();
 ::__ASSET__flixel_sounds_flixel_ogg_obj::__register();
 ::__ASSET__flixel_sounds_beep_ogg_obj::__register();
+::flixel::FlxSprite_obj::__register();
+::flixel::FlxObject_obj::__register();
+::flixel::FlxBasic_obj::__register();
 ::AssetPaths_obj::__register();
 ::openfl::display::DisplayObject_obj::__register();
 ::openfl::_Vector::Vector_Impl__obj::__register();
@@ -4266,7 +4269,6 @@ __files__boot();
 ::flixel::FlxState_obj::__register();
 ::flixel::group::FlxTypedContainer_obj::__register();
 ::flixel::group::FlxTypedGroup_obj::__register();
-::flixel::util::IFlxDestroyable_obj::__register();
 ::__ASSET__OPENFL__flixel_fonts_monsterrat_ttf_obj::__register();
 ::__ASSET__OPENFL__flixel_fonts_nokiafc22_ttf_obj::__register();
 ::lime::graphics::Image_obj::__register();
@@ -4277,6 +4279,8 @@ __files__boot();
 ::IntIterator_obj::__register();
 ::EReg_obj::__register();
 ::Date_obj::__register();
+::CatClicker_obj::__register();
+::flixel::util::IFlxDestroyable_obj::__register();
 ::DocumentClass_obj::__register();
 ::Main_obj::__register();
 ::openfl::display::Sprite_obj::__register();
@@ -4368,6 +4372,9 @@ __files__boot();
 ::openfl::_Vector::Vector_Impl__obj::__boot();
 ::openfl::display::DisplayObject_obj::__boot();
 ::AssetPaths_obj::__boot();
+::flixel::FlxBasic_obj::__boot();
+::flixel::FlxObject_obj::__boot();
+::flixel::FlxSprite_obj::__boot();
 ::__ASSET__flixel_sounds_beep_ogg_obj::__boot();
 ::__ASSET__flixel_sounds_flixel_ogg_obj::__boot();
 ::__ASSET__flixel_fonts_nokiafc22_ttf_obj::__boot();
@@ -4375,7 +4382,6 @@ __files__boot();
 ::__ASSET__flixel_images_ui_button_png_obj::__boot();
 ::__ASSET__flixel_images_logo_default_png_obj::__boot();
 ::openfl::text::Font_obj::__boot();
-::flixel::FlxBasic_obj::__boot();
 ::haxe::SysTools_obj::__boot();
 ::Xml_obj::__boot();
 ::flixel::math::FlxBasePoint_obj::__boot();
@@ -4388,8 +4394,6 @@ __files__boot();
 ::flixel::util::FlxSave_obj::__boot();
 ::flixel::FlxG_obj::__boot();
 ::flixel::_hx_system::FlxSplash_obj::__boot();
-::flixel::FlxObject_obj::__boot();
-::flixel::FlxSprite_obj::__boot();
 ::flixel::animation::FlxPrerotatedAnimation_obj::__boot();
 ::flixel::effects::FlxFlicker_obj::__boot();
 ::flixel::graphics::FlxGraphic_obj::__boot();

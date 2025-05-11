@@ -5,6 +5,9 @@
 #define INCLUDED_95f339a1d026d52c
 #include "hxMath.h"
 #endif
+#ifndef INCLUDED_CatClicker
+#include <CatClicker.h>
+#endif
 #ifndef INCLUDED_PlayState
 #include <PlayState.h>
 #endif
@@ -53,9 +56,6 @@
 #ifndef INCLUDED_flixel_input_mouse_FlxMouseButton
 #include <flixel/input/mouse/FlxMouseButton.h>
 #endif
-#ifndef INCLUDED_flixel_math_FlxBasePoint
-#include <flixel/math/FlxBasePoint.h>
-#endif
 #ifndef INCLUDED_flixel_system_frontEnds_CameraFrontEnd
 #include <flixel/system/frontEnds/CameraFrontEnd.h>
 #endif
@@ -65,18 +65,16 @@
 #ifndef INCLUDED_flixel_util_IFlxDestroyable
 #include <flixel/util/IFlxDestroyable.h>
 #endif
-#ifndef INCLUDED_flixel_util_IFlxPooled
-#include <flixel/util/IFlxPooled.h>
-#endif
 
 HX_DEFINE_STACK_FRAME(_hx_pos_af23706db05c7feb_9_new,"PlayState","new",0xf8bf96cf,"PlayState.new","PlayState.hx",9,0xb30d7781)
 HX_LOCAL_STACK_FRAME(_hx_pos_af23706db05c7feb_15_create,"PlayState","create",0x82220fed,"PlayState.create","PlayState.hx",15,0xb30d7781)
-HX_LOCAL_STACK_FRAME(_hx_pos_af23706db05c7feb_32_update,"PlayState","update",0x8d182efa,"PlayState.update","PlayState.hx",32,0xb30d7781)
-HX_LOCAL_STACK_FRAME(_hx_pos_af23706db05c7feb_49_updatemilktext,"PlayState","updatemilktext",0x45e3dc02,"PlayState.updatemilktext","PlayState.hx",49,0xb30d7781)
+HX_LOCAL_STACK_FRAME(_hx_pos_af23706db05c7feb_27_update,"PlayState","update",0x8d182efa,"PlayState.update","PlayState.hx",27,0xb30d7781)
+HX_LOCAL_STACK_FRAME(_hx_pos_af23706db05c7feb_40_updatemilktext,"PlayState","updatemilktext",0x45e3dc02,"PlayState.updatemilktext","PlayState.hx",40,0xb30d7781)
 
 void PlayState_obj::__construct(){
-            	HX_STACKFRAME(&_hx_pos_af23706db05c7feb_9_new)
+            	HX_GC_STACKFRAME(&_hx_pos_af23706db05c7feb_9_new)
 HXLINE(  13)		this->cannypoints = 0;
+HXLINE(  12)		this->catClicker =  ::CatClicker_obj::__alloc( HX_CTX );
 HXLINE(   9)		super::__construct();
             	}
 
@@ -110,81 +108,33 @@ bool PlayState_obj::_hx_isInstanceOf(int inClassId) {
 void PlayState_obj::create(){
             	HX_GC_STACKFRAME(&_hx_pos_af23706db05c7feb_15_create)
 HXLINE(  16)		this->super::create();
-HXLINE(  17)		this->cannycat =  ::flixel::FlxSprite_obj::__alloc( HX_CTX ,null(),null(),null());
-HXLINE(  18)		this->cannycat->loadGraphic(HX_("assets/images/UncannyCat.png",1a,fe,84,98),null(),null(),null(),null(),null());
-HXLINE(  19)		{
-HXLINE(  19)			 ::flixel::math::FlxBasePoint this1 = this->cannycat->scale;
-HXDLIN(  19)			this1->set_x(((Float)0.4));
-HXDLIN(  19)			this1->set_y(((Float)0.4));
+HXLINE(  17)		this->add(this->catClicker);
+HXLINE(  19)		::flixel::FlxG_obj::cameras->set_bgColor(-16777216);
+HXLINE(  21)		this->cannypointstext =  ::flixel::text::FlxText_obj::__alloc( HX_CTX ,100,0,null(),HX_(" Milk",1b,09,08,a0),20,null());
+HXLINE(  22)		{
+HXLINE(  22)			int this1 = this->cannypointstext->color;
+HXDLIN(  22)			Float _hx_tmp = (( (Float)(((this1 >> 16) & 255)) ) / ( (Float)(255) ));
+HXDLIN(  22)			Float _hx_tmp1 = ::Math_obj::max((( (Float)(((this1 >> 8) & 255)) ) / ( (Float)(255) )),(( (Float)((this1 & 255)) ) / ( (Float)(255) )));
             		}
-HXLINE(  20)		this->cannycat->updateHitbox();
-HXLINE(  21)		{
-HXLINE(  21)			 ::flixel::FlxSprite _this = this->cannycat;
-HXDLIN(  21)			int axes = 17;
-HXDLIN(  21)			bool _hx_tmp;
-HXDLIN(  21)			if ((axes != 1)) {
-HXLINE(  21)				_hx_tmp = (axes == 17);
-            			}
-            			else {
-HXLINE(  21)				_hx_tmp = true;
-            			}
-HXDLIN(  21)			if (_hx_tmp) {
-HXLINE(  21)				int _hx_tmp1 = ::flixel::FlxG_obj::width;
-HXDLIN(  21)				_this->set_x(((( (Float)(_hx_tmp1) ) - _this->get_width()) / ( (Float)(2) )));
-            			}
-HXDLIN(  21)			bool _hx_tmp2;
-HXDLIN(  21)			if ((axes != 16)) {
-HXLINE(  21)				_hx_tmp2 = (axes == 17);
-            			}
-            			else {
-HXLINE(  21)				_hx_tmp2 = true;
-            			}
-HXDLIN(  21)			if (_hx_tmp2) {
-HXLINE(  21)				int _hx_tmp3 = ::flixel::FlxG_obj::height;
-HXDLIN(  21)				_this->set_y(((( (Float)(_hx_tmp3) ) - _this->get_height()) / ( (Float)(2) )));
-            			}
-            		}
-HXLINE(  22)		this->add(this->cannycat);
-HXLINE(  24)		::flixel::FlxG_obj::cameras->set_bgColor(-16777216);
-HXLINE(  26)		this->cannypointstext =  ::flixel::text::FlxText_obj::__alloc( HX_CTX ,100,0,null(),HX_(" Milk",1b,09,08,a0),20,null());
-HXLINE(  27)		{
-HXLINE(  27)			int this2 = this->cannypointstext->color;
-HXDLIN(  27)			Float _hx_tmp4 = (( (Float)(((this2 >> 16) & 255)) ) / ( (Float)(255) ));
-HXDLIN(  27)			Float _hx_tmp5 = ::Math_obj::max((( (Float)(((this2 >> 8) & 255)) ) / ( (Float)(255) )),(( (Float)((this2 & 255)) ) / ( (Float)(255) )));
-            		}
-HXLINE(  28)		this->add(this->cannypointstext);
+HXLINE(  23)		this->add(this->cannypointstext);
             	}
 
 
 void PlayState_obj::update(Float elapsed){
-            	HX_STACKFRAME(&_hx_pos_af23706db05c7feb_32_update)
-HXLINE(  33)		this->super::update(elapsed);
-HXLINE(  35)		if (::flixel::FlxG_obj::mouse->overlaps(this->cannycat,null())) {
-HXLINE(  36)			{
-HXLINE(  36)				 ::flixel::math::FlxBasePoint this1 = this->cannycat->scale;
-HXDLIN(  36)				this1->set_x(((Float)0.43));
-HXDLIN(  36)				this1->set_y(((Float)0.43));
+            	HX_STACKFRAME(&_hx_pos_af23706db05c7feb_27_update)
+HXLINE(  28)		this->super::update(elapsed);
+HXLINE(  30)		if (::flixel::FlxG_obj::mouse->overlaps(this->catClicker,null())) {
+HXLINE(  32)			if ((::flixel::FlxG_obj::mouse->_leftButton->current == -1)) {
+HXLINE(  34)				this->updatemilktext();
             			}
-HXLINE(  37)			this->cannycat->updateHitbox();
-HXLINE(  38)			if ((::flixel::FlxG_obj::mouse->_leftButton->current == -1)) {
-HXLINE(  39)				this->cannypoints = ::Std_obj::_hx_int(( (Float)((this->cannypoints + 1)) ));
-HXLINE(  40)				this->updatemilktext();
-            			}
-            		}
-            		else {
-HXLINE(  43)			{
-HXLINE(  43)				 ::flixel::math::FlxBasePoint this2 = this->cannycat->scale;
-HXDLIN(  43)				this2->set_x(((Float)0.4));
-HXDLIN(  43)				this2->set_y(((Float)0.4));
-            			}
-HXLINE(  44)			this->cannycat->updateHitbox();
             		}
             	}
 
 
 void PlayState_obj::updatemilktext(){
-            	HX_STACKFRAME(&_hx_pos_af23706db05c7feb_49_updatemilktext)
-HXDLIN(  49)		this->cannypointstext->set_text((this->cannypoints + HX_(" Milk",1b,09,08,a0)));
+            	HX_STACKFRAME(&_hx_pos_af23706db05c7feb_40_updatemilktext)
+HXLINE(  41)		this->cannypoints = ::Std_obj::_hx_int(( (Float)((this->cannypoints + 1)) ));
+HXLINE(  42)		this->cannypointstext->set_text((this->cannypoints + HX_(" Milk",1b,09,08,a0)));
             	}
 
 
@@ -211,8 +161,8 @@ PlayState_obj::PlayState_obj()
 void PlayState_obj::__Mark(HX_MARK_PARAMS)
 {
 	HX_MARK_BEGIN_CLASS(PlayState);
-	HX_MARK_MEMBER_NAME(cannycat,"cannycat");
 	HX_MARK_MEMBER_NAME(cannypointstext,"cannypointstext");
+	HX_MARK_MEMBER_NAME(catClicker,"catClicker");
 	HX_MARK_MEMBER_NAME(cannypoints,"cannypoints");
 	 ::flixel::FlxState_obj::__Mark(HX_MARK_ARG);
 	HX_MARK_END_CLASS();
@@ -220,8 +170,8 @@ void PlayState_obj::__Mark(HX_MARK_PARAMS)
 
 void PlayState_obj::__Visit(HX_VISIT_PARAMS)
 {
-	HX_VISIT_MEMBER_NAME(cannycat,"cannycat");
 	HX_VISIT_MEMBER_NAME(cannypointstext,"cannypointstext");
+	HX_VISIT_MEMBER_NAME(catClicker,"catClicker");
 	HX_VISIT_MEMBER_NAME(cannypoints,"cannypoints");
 	 ::flixel::FlxState_obj::__Visit(HX_VISIT_ARG);
 }
@@ -233,8 +183,8 @@ void PlayState_obj::__Visit(HX_VISIT_PARAMS)
 		if (HX_FIELD_EQ(inName,"create") ) { return ::hx::Val( create_dyn() ); }
 		if (HX_FIELD_EQ(inName,"update") ) { return ::hx::Val( update_dyn() ); }
 		break;
-	case 8:
-		if (HX_FIELD_EQ(inName,"cannycat") ) { return ::hx::Val( cannycat ); }
+	case 10:
+		if (HX_FIELD_EQ(inName,"catClicker") ) { return ::hx::Val( catClicker ); }
 		break;
 	case 11:
 		if (HX_FIELD_EQ(inName,"cannypoints") ) { return ::hx::Val( cannypoints ); }
@@ -251,8 +201,8 @@ void PlayState_obj::__Visit(HX_VISIT_PARAMS)
 ::hx::Val PlayState_obj::__SetField(const ::String &inName,const ::hx::Val &inValue,::hx::PropertyAccess inCallProp)
 {
 	switch(inName.length) {
-	case 8:
-		if (HX_FIELD_EQ(inName,"cannycat") ) { cannycat=inValue.Cast<  ::flixel::FlxSprite >(); return inValue; }
+	case 10:
+		if (HX_FIELD_EQ(inName,"catClicker") ) { catClicker=inValue.Cast<  ::CatClicker >(); return inValue; }
 		break;
 	case 11:
 		if (HX_FIELD_EQ(inName,"cannypoints") ) { cannypoints=inValue.Cast< int >(); return inValue; }
@@ -265,16 +215,16 @@ void PlayState_obj::__Visit(HX_VISIT_PARAMS)
 
 void PlayState_obj::__GetFields(Array< ::String> &outFields)
 {
-	outFields->push(HX_("cannycat",9b,e6,bf,81));
 	outFields->push(HX_("cannypointstext",6b,44,b2,53));
+	outFields->push(HX_("catClicker",3f,79,9e,fc));
 	outFields->push(HX_("cannypoints",be,40,76,88));
 	super::__GetFields(outFields);
 };
 
 #ifdef HXCPP_SCRIPTABLE
 static ::hx::StorageInfo PlayState_obj_sMemberStorageInfo[] = {
-	{::hx::fsObject /*  ::flixel::FlxSprite */ ,(int)offsetof(PlayState_obj,cannycat),HX_("cannycat",9b,e6,bf,81)},
 	{::hx::fsObject /*  ::flixel::text::FlxText */ ,(int)offsetof(PlayState_obj,cannypointstext),HX_("cannypointstext",6b,44,b2,53)},
+	{::hx::fsObject /*  ::CatClicker */ ,(int)offsetof(PlayState_obj,catClicker),HX_("catClicker",3f,79,9e,fc)},
 	{::hx::fsInt,(int)offsetof(PlayState_obj,cannypoints),HX_("cannypoints",be,40,76,88)},
 	{ ::hx::fsUnknown, 0, null()}
 };
@@ -282,8 +232,8 @@ static ::hx::StaticInfo *PlayState_obj_sStaticStorageInfo = 0;
 #endif
 
 static ::String PlayState_obj_sMemberFields[] = {
-	HX_("cannycat",9b,e6,bf,81),
 	HX_("cannypointstext",6b,44,b2,53),
+	HX_("catClicker",3f,79,9e,fc),
 	HX_("cannypoints",be,40,76,88),
 	HX_("create",fc,66,0f,7c),
 	HX_("update",09,86,05,87),

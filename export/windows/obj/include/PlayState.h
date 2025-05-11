@@ -9,6 +9,7 @@
 #ifndef INCLUDED_flixel_FlxState
 #include <flixel/FlxState.h>
 #endif
+HX_DECLARE_CLASS0(CatClicker)
 HX_DECLARE_CLASS0(PlayState)
 HX_DECLARE_CLASS1(flixel,FlxBasic)
 HX_DECLARE_CLASS1(flixel,FlxObject)
@@ -53,8 +54,8 @@ class HXCPP_CLASS_ATTRIBUTES PlayState_obj : public  ::flixel::FlxState_obj
 		bool _hx_isInstanceOf(int inClassId);
 		::String __ToString() const { return HX_("PlayState",5d,83,c2,46); }
 
-		 ::flixel::FlxSprite cannycat;
 		 ::flixel::text::FlxText cannypointstext;
+		 ::CatClicker catClicker;
 		int cannypoints;
 		void create();
 
