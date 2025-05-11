@@ -9,11 +9,11 @@ import flixel.util.FlxColor;
 class PlayState extends FlxState
 {
 	var cannypointstext:FlxText;
-	var catClicker = new CatClicker();
 	var cannypoints:Int = 0;
 	override public function create()
 	{
 		super.create();
+		var catClicker = new CatClicker();
 		add(catClicker);
 
 		FlxG.cameras.bgColor = 0xff000000;
@@ -26,14 +26,7 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
-		if (FlxG.mouse.overlaps(catClicker))
-		{
-			if (FlxG.mouse.justReleased)
-			{
-				updatemilktext();
-			}
-		}
+		updatemilktext();
 	}
 
 	function updatemilktext()
