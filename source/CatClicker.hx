@@ -5,8 +5,6 @@ import flixel.FlxSprite;
 
 class CatClicker extends FlxSprite
 {
-
-    var catClicker:FlxSprite;
     public function new() {
         super();
         loadGraphic(AssetPaths.UncannyCat__png);
