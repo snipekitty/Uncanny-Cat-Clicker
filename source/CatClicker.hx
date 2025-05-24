@@ -21,9 +21,8 @@ class CatClicker extends FlxSprite
 
     function clicking() 
     {
-        if(FlxG.mouse.overlaps(catClicker)) {
+        if(FlxG.mouse.overlaps(this)) {
             if(FlxG.mouse.justReleased) {
-                trace("why");
             }
         }
     }
