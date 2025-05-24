@@ -9,18 +9,16 @@ import flixel.util.FlxColor;
 class PlayState extends FlxState
 {
 	var catClicker:CatClicker;
-	var cannypointstext:FlxText;
-	var cannypoints:Int = 0;
+	var milkHud:MilkHud;
 	override public function create()
 	{
 		var catClicker = new CatClicker();
 		add(catClicker);
 
-		FlxG.cameras.bgColor = 0xff000000;
+		var milkHud = new MilkHud();
+		add(milkHud);
 
-		cannypointstext = new FlxText(100, 0, " Milk", 20);
-		cannypointstext.color.black;
-		add(cannypointstext);
+		FlxG.cameras.bgColor = 0xff000000;
 
 		super.create();
 	}
@@ -28,11 +26,5 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-	}
-
-	function updatemilktext()
-	{
-		cannypoints = Std.int((cannypoints) + 1);
-		cannypointstext.text = ((cannypoints) + " Milk");
 	}
 }

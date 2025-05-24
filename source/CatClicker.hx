@@ -1,5 +1,6 @@
 package;
 
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
 import flixel.FlxSprite;
 
@@ -21,8 +22,10 @@ class CatClicker extends FlxSprite
 
     function clicking() 
     {
-        if(FlxG.mouse.overlaps(this)) {
-            if(FlxG.mouse.justReleased) {
+        if(FlxG.mouse.overlaps(this)) 
+        {
+            if(FlxG.mouse.justReleased) 
+            {
                 
             }
         }
