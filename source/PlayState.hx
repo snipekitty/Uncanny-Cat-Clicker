@@ -28,10 +28,9 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		updatemilktext();
 	}
 
-	public function updatemilktext()
+	function updatemilktext()
 	{
 		cannypoints = Std.int((cannypoints) + 1);
 		cannypointstext.text = ((cannypoints) + " Milk");

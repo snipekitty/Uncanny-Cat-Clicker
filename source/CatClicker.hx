@@ -23,6 +23,7 @@ class CatClicker extends FlxSprite
     {
         if(FlxG.mouse.overlaps(this)) {
             if(FlxG.mouse.justReleased) {
+                
             }
         }
     }
