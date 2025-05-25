@@ -13,7 +13,8 @@ class MilkHud extends FlxTypedGroup<FlxSprite>
     public function new() 
     {
         super();
-        milkText = new FlxText(100, 0, "0 Milk", 20);
+        milkText = new FlxText(100, 0, "0 Milk", 30);
+        milkText.font = "assets/fonts/Comic Sans MS.ttf";
         add(milkText);
     }
 
