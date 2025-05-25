@@ -9,8 +9,8 @@ class CatClicker extends FlxSprite
 {
     public function new() {
         super();
-        loadGraphic(AssetPaths.UncannyCat__png);
-        scale.set(0.4, 0.4);
+        loadGraphic(AssetPaths.CannyCat__png);
+        scale.set(0.6, 0.6);
         updateHitbox();
         screenCenter();
     }
