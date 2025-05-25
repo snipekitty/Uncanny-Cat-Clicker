@@ -3,6 +3,7 @@ package;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import MilkHud;
 
 class CatClicker extends FlxSprite
 {
@@ -26,7 +27,7 @@ class CatClicker extends FlxSprite
         {
             if(FlxG.mouse.justReleased) 
             {
-                
+                MilkHud.updateMilkText();
             }
         }
     }

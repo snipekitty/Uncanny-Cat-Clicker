@@ -7,8 +7,8 @@ import flixel.FlxSprite;
 
 class MilkHud extends FlxTypedGroup<FlxSprite>
 {
-    var milkText:FlxText;
-    var milkNum:Int = 0;
+    static var milkText:FlxText;
+    static var milkNum:Int = 0;
 
     public function new() 
     {
@@ -17,9 +17,9 @@ class MilkHud extends FlxTypedGroup<FlxSprite>
         add(milkText);
     }
 
-    public function updateMilkText() 
+    static public function updateMilkText() 
     {
         milkNum = Std.int((milkNum) + 1);
-        milkText.text = ((milkText) + " Milk");
+        milkText.text = ((milkNum) + " Milk");
     }
 }
