@@ -11,7 +11,7 @@ class CatClicker extends FlxSprite
     public function new() {
         super();
         loadGraphic(AssetPaths.CannyCat__png);
-        scale.set(0.6, 0.6);
+        scale.set(0.5, 0.5);
         updateHitbox();
         screenCenter();
     }
@@ -26,7 +26,7 @@ class CatClicker extends FlxSprite
     {
         if(FlxG.mouse.overlaps(this)) 
         {
-            FlxTween.tween(this, { "scale.x": 0.7, "scale.y": 0.7}, 0.1,
+            FlxTween.tween(this, { "scale.x": 0.55, "scale.y": 0.55}, 0.1,
             {
                 ease: FlxEase.elasticOut
             });
@@ -34,13 +34,13 @@ class CatClicker extends FlxSprite
             {
                 FlxTween.cancelTweensOf(this);
                 MilkHud.updateMilkText();
-                FlxTween.tween(this, { "scale.x": 0.5, "scale.y": 0.5}, 0.5, 
+                FlxTween.tween(this, { "scale.x": 0.4, "scale.y": 0.4}, 0.5, 
                 {
                     ease: FlxEase.elasticOut
                 });
             }
         } else {
-            FlxTween.tween(this, { "scale.x": 0.6, "scale.y": 0.6}, 0.1, 
+            FlxTween.tween(this, { "scale.x": 0.5, "scale.y": 0.5}, 0.1, 
             {
                 ease: FlxEase.elasticOut
             });
