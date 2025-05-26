@@ -1,10 +1,12 @@
 package;
 
+import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.addons.effects.chainable.FlxWaveEffect;
 
 class PlayState extends FlxState
 {
@@ -14,6 +16,9 @@ class PlayState extends FlxState
 	{
 		var backgroundImage = new FlxSprite();
 		backgroundImage.loadGraphic(AssetPaths.background__png);
+		var waveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 10, -1, 4);
+		var waveBackground = new FlxEffectSprite(backgroundImage, [waveEffect]);
+		add(waveBackground);
 		add(backgroundImage);
 		
 		var catClicker = new CatClicker();
@@ -22,9 +27,11 @@ class PlayState extends FlxState
 		var milkHud = new MilkHud();
 		add(milkHud);
 
-		FlxG.cameras.bgColor = 0xffffffff;
+		FlxG.cameras.bgColor = 0xff000000;
 
 		super.create();
+
+		
 	}
 
 	override public function update(elapsed:Float)

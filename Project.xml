@@ -89,4 +89,5 @@
 
 	<!--Place custom nodes like icons here-->
 	<icon path="icon.png" size="64"/> <!--PLACEHOLDER, change icon and make it an svg-->
+	<haxelib name="flixel-addons" />
 </project>
