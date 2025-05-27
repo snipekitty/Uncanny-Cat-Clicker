@@ -8,6 +8,7 @@ import MilkHud;
 
 class CatClicker extends FlxSprite
 {
+    // the cat that you can click
     public function new() {
         super();
         loadGraphic(AssetPaths.CannyCat__png);

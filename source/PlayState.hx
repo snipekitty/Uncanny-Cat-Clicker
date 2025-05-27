@@ -30,8 +30,6 @@ class PlayState extends FlxState
 		FlxG.cameras.bgColor = 0xff000000;
 
 		super.create();
-
-		
 	}
 
 	override public function update(elapsed:Float)

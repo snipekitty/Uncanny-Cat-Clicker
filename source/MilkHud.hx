@@ -8,6 +8,7 @@ import flixel.FlxSprite;
 
 class MilkHud extends FlxTypedGroup<FlxSprite>
 {
+    // hud for the the milk counter
     static var milkText:FlxText;
     static var milkNum:Int = 0;
 
