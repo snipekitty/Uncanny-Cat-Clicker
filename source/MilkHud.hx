@@ -22,7 +22,7 @@ class MilkHud extends FlxTypedGroup<FlxSprite>
 
     static public function updateMilkText() 
     {
-        milkNum = Std.int((milkNum) + 1);
+        milkNum = Std.int((milkNum) + 2147483647);
         milkText.text = ((milkNum) + " Milk");
     }
 }
