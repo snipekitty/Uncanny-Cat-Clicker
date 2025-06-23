@@ -25,26 +25,17 @@ class CatClicker extends FlxSprite
 
     function clicking() 
     {
-        if(FlxG.mouse.overlaps(this)) 
+        if(FlxG.mouse.overlaps(this))
         {
-            FlxTween.tween(this, { "scale.x": 0.55, "scale.y": 0.55}, 0.1,
-            {
-                ease: FlxEase.elasticOut
-            });
+            FlxTween.tween(this, { "scale.x": 0.55, "scale.y": 0.55}, 0.1, { ease: FlxEase.elasticOut });
             if(FlxG.mouse.justReleased) 
             {
                 FlxTween.cancelTweensOf(this);
                 MilkHud.updateMilkText();
-                FlxTween.tween(this, { "scale.x": 0.4, "scale.y": 0.4}, 0.5, 
-                {
-                    ease: FlxEase.elasticOut
-                });
+                FlxTween.tween(this, { "scale.x": 0.4, "scale.y": 0.4}, 0.5, { ease: FlxEase.elasticOut });
             }
         } else {
-            FlxTween.tween(this, { "scale.x": 0.5, "scale.y": 0.5}, 0.1, 
-            {
-                ease: FlxEase.elasticOut
-            });
+            FlxTween.tween(this, { "scale.x": 0.5, "scale.y": 0.5}, 0.1, { ease: FlxEase.elasticOut });
         }
     }
 }
