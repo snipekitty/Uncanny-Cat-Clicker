@@ -1,5 +1,6 @@
 package;
 
+import lime.utils.Float64Array;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
@@ -10,7 +11,7 @@ class MilkHud extends FlxTypedGroup<FlxSprite>
 {
     // hud for the the milk counter
     static var milkText:FlxText;
-    static var milkNum:Int = 0;
+    static var milkNum:Float = 0;
 
     public function new() 
     {
@@ -22,7 +23,7 @@ class MilkHud extends FlxTypedGroup<FlxSprite>
 
     static public function updateMilkText() 
     {
-        milkNum = Std.int((milkNum) + 2147483647);
+        milkNum = ((milkNum) + 1);
         milkText.text = ((milkNum) + " Milk");
     }
 }
