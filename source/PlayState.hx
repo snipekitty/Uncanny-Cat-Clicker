@@ -7,12 +7,13 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.addons.effects.chainable.FlxWaveEffect;
+import flash.display.BlendMode;
 
 class PlayState extends FlxState
 {
 	var catClicker:CatClicker;
-	var milkHud:MilkHud;
-	var catTreats:CatTreats;
+	var mainHud:MainHud;
+
 	override public function create()
 	{
 		var backgroundImage = new FlxSprite();
@@ -25,11 +26,8 @@ class PlayState extends FlxState
 		var catClicker = new CatClicker();
 		add(catClicker);
 
-		var catTreats = new CatTreats();
-		add(catTreats);
-
-		var milkHud = new MilkHud();
-		add(milkHud);
+		var mainHud = new MainHud();
+		add(mainHud);
 
 		FlxG.cameras.bgColor = 0xffffffff;
 

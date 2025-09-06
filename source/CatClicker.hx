@@ -4,7 +4,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import MilkHud;
+import MainHud;
 
 class CatClicker extends FlxSprite
 {
@@ -31,7 +31,7 @@ class CatClicker extends FlxSprite
             if(FlxG.mouse.justReleased) 
             {
                 FlxTween.cancelTweensOf(this);
-                MilkHud.updateMilkText();
+                MainHud.updateMilkText();
                 FlxTween.tween(this, { "scale.x": 0.4, "scale.y": 0.4}, 0.5, { ease: FlxEase.elasticOut });
             }
         } else {
