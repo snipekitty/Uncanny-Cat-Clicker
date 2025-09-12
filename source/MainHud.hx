@@ -12,7 +12,9 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     // hud for the the milk counter
     static var milkText:FlxText;
     static var milkNum:Float = 0;
-    static var shopIcon:FlxSprite;
+    var shopIcon:FlxSprite;
+    var isShopOpened:Bool = false;
+
 
     public function new() 
     {
@@ -32,6 +34,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     {
         super.update(elapsed);
         shopClicked();
+        shopOpened();
     }
 
     static public function updateMilkText() 
@@ -45,14 +48,26 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     {
         if(FlxG.mouse.overlaps(shopIcon))
         {
-            FlxTween.tween(shopIcon, { "scale.x": 0.13, "scale.y": 0.13}, 0.1, { ease: FlxEase.elasticOut });
+            FlxTween.tween(shopIcon, { "scale.x": 0.12, "scale.y": 0.1}, 0.1, { ease: FlxEase.elasticOut });
             if(FlxG.mouse.justReleased) 
             {
+                isShopOpened = !isShopOpened;
                 FlxTween.cancelTweensOf(shopIcon);
-                FlxTween.tween(shopIcon, { "scale.x": 0.08, "scale.y": 0.08}, 0.5, { ease: FlxEase.elasticOut });
+                FlxTween.tween(shopIcon, { "scale.x": 0.09, "scale.y": 0.09}, 0.5, { ease: FlxEase.elasticOut });
+                trace(isShopOpened);
             }
         } else {
             FlxTween.tween(shopIcon, { "scale.x": 0.1, "scale.y": 0.1}, 0.1, { ease: FlxEase.elasticOut });
+        }
+    }
+
+    function shopOpened() 
+    {
+        if(isShopOpened)
+        {
+            isShopOpened = !isShopOpened;
+            
+            trace(isShopOpened);
         }
     }
 }

@@ -19,8 +19,8 @@ class CatClicker extends FlxSprite
 
     override function update(elapsed:Float) 
     {
-        clicking();
         super.update(elapsed);
+        clicking();
     }
 
     function clicking() 
