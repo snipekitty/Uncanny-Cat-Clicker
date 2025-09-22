@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.FlxG;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -12,6 +13,8 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     // hud for the the milk counter
     static var milkText:FlxText;
     static var milkNum:Float = 0;
+    static var clickBonus:Float = 0;
+    static var clicksPerSecond:Float = 1;
     var shopIcon:FlxSprite;
     var isShopOpened:Bool = false;
 
@@ -33,15 +36,21 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
+        waitBeforeCPS();
+        milkText.text = ((milkNum) + " Milk");
         shopClicked();
         shopOpened();
     }
 
     static public function updateMilkText() 
     {
-        milkNum = ((milkNum) + 1);
-        milkText.text = ((milkNum) + " Milk");
+        milkNum = ((milkNum) + (1 + (clickBonus)));
         trace(milkNum);
+    }
+
+    static public function waitBeforeCPS()
+    {
+        milkNum = ((milkNum) + (clicksPerSecond));
     }
 
     function shopClicked()
