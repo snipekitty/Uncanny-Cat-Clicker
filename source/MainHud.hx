@@ -17,7 +17,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     static var clicksPerSecond:Float = 1;
     var shopIcon:FlxSprite;
     var isShopOpened:Bool = false;
-
+    static var autoClickDelay:Float = 0;
 
     public function new() 
     {
@@ -36,6 +36,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
+        autoClickDelay += 1;
         waitBeforeCPS();
         milkText.text = ((milkNum) + " Milk");
         shopClicked();
@@ -50,7 +51,10 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 
     static public function waitBeforeCPS()
     {
-        milkNum = ((milkNum) + (clicksPerSecond));
+        if(autoClickDelay == 100) {
+            autoClickDelay = 0;
+            milkNum = ((milkNum) + (clicksPerSecond));
+        }
     }
 
     function shopClicked()

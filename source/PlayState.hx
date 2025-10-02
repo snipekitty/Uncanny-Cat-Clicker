@@ -4,10 +4,7 @@ import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.text.FlxText;
-import flixel.util.FlxColor;
 import flixel.addons.effects.chainable.FlxWaveEffect;
-import flash.display.BlendMode;
 
 class PlayState extends FlxState
 {
