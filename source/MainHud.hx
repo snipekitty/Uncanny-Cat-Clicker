@@ -1,6 +1,5 @@
 package;
 
-import flixel.util.FlxTimer;
 import flixel.FlxG;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -14,7 +13,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     static var milkText:FlxText;
     static var milkNum:Float = 0;
     static var clickBonus:Float = 0;
-    static var clicksPerSecond:Float = 1;
+    static var clicksPerSecond:Float = 0;
     var shopIcon:FlxSprite;
     var isShopOpened:Bool = false;
     static var autoClickDelay:Float = 0;
@@ -36,7 +35,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
-        autoClickDelay += 1;
+        autoClickDelay += 1 * elapsed;
         waitBeforeCPS();
         milkText.text = ((milkNum) + " Milk");
         shopClicked();
@@ -51,7 +50,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 
     static public function waitBeforeCPS()
     {
-        if(autoClickDelay == 100) {
+        if(autoClickDelay >= 1) {
             autoClickDelay = 0;
             milkNum = ((milkNum) + (clicksPerSecond));
         }
@@ -61,7 +60,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     {
         if(FlxG.mouse.overlaps(shopIcon))
         {
-            FlxTween.tween(shopIcon, { "scale.x": 0.12, "scale.y": 0.1}, 0.1, { ease: FlxEase.elasticOut });
+            FlxTween.tween(shopIcon, { "scale.x": 0.12, "scale.y": 0.12}, 0.1, { ease: FlxEase.elasticOut });
             if(FlxG.mouse.justReleased) 
             {
                 isShopOpened = !isShopOpened;
