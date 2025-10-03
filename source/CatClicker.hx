@@ -1,5 +1,6 @@
 package;
 
+import flixel.sound.FlxSound;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.FlxG;
@@ -15,6 +16,8 @@ class CatClicker extends FlxSprite
         scale.set(0.5, 0.5);
         updateHitbox();
         screenCenter();
+
+        var cannySounds:Array<FlxSound> = [];
     }
 
     override function update(elapsed:Float) 

@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -13,12 +14,13 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		var backgroundImage = new FlxSprite();
-		backgroundImage.loadGraphic(AssetPaths.background__png);
+ 		var mainBackground = new FlxBackdrop(AssetPaths.background__png);
+		mainBackground.velocity.set(25,25);
+
 		var waveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 10, -1, 4);
-		var waveBackground = new FlxEffectSprite(backgroundImage, [waveEffect]);
+		var waveBackground = new FlxEffectSprite(mainBackground, [waveEffect]);
 		add(waveBackground);
-		add(backgroundImage);
+		add(mainBackground);
 		
 		var catClicker = new CatClicker();
 		add(catClicker);
