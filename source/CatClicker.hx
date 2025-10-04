@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxRandom;
 import flixel.sound.FlxSound;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -9,6 +10,13 @@ import MainHud;
 
 class CatClicker extends FlxSprite
 {
+    // sounds i suppose
+    static var cannyHeh:FlxSound;
+    static var cannyNah:FlxSound;
+    static var cannyNyeh:FlxSound;
+
+    static var randomNumber:Int;
+    
     // the cat that you can click
     public function new() {
         super();
@@ -16,8 +24,6 @@ class CatClicker extends FlxSprite
         scale.set(0.5, 0.5);
         updateHitbox();
         screenCenter();
-
-        var cannySounds:Array<FlxSound> = [];
     }
 
     override function update(elapsed:Float) 
@@ -33,6 +39,8 @@ class CatClicker extends FlxSprite
             FlxTween.tween(this, { "scale.x": 0.55, "scale.y": 0.55}, 0.1, { ease: FlxEase.elasticOut });
             if(FlxG.mouse.justReleased) 
             {
+                trace(randomNumber);
+                playCannySounds();
                 FlxTween.cancelTweensOf(this);
                 MainHud.updateMilkText();
                 FlxTween.tween(this, { "scale.x": 0.4, "scale.y": 0.4}, 0.5, { ease: FlxEase.elasticOut });
@@ -40,5 +48,20 @@ class CatClicker extends FlxSprite
         } else {
             FlxTween.tween(this, { "scale.x": 0.5, "scale.y": 0.5}, 0.1, { ease: FlxEase.elasticOut });
         }
+    }
+
+    function playCannySounds()
+    {
+        cannyHeh = FlxG.sound.play(AssetPaths.heh__wav);
+        cannyNah = FlxG.sound.play(AssetPaths.nah__wav);
+        cannyNyeh = FlxG.sound.play(AssetPaths.nyeh__wav);
+
+        randomNumber = FlxG.random.int(0, 2);
+
+        static var cannySounds:Array<FlxSound> = [cannyHeh, cannyNah, cannyNyeh];
+
+        cannySounds[1].play;
+
+        trace(cannySounds);
     }
 }
