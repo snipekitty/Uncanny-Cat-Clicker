@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxSort;
 import flixel.math.FlxRandom;
 import flixel.sound.FlxSound;
 import flixel.tweens.FlxEase;
@@ -52,16 +53,15 @@ class CatClicker extends FlxSprite
 
     function playCannySounds()
     {
-        cannyHeh = FlxG.sound.play(AssetPaths.heh__wav);
-        cannyNah = FlxG.sound.play(AssetPaths.nah__wav);
-        cannyNyeh = FlxG.sound.play(AssetPaths.nyeh__wav);
+        cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
+        cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
+        cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
 
         randomNumber = FlxG.random.int(0, 2);
 
-        static var cannySounds:Array<FlxSound> = [cannyHeh, cannyNah, cannyNyeh];
+        var cannySounds:Array<FlxSound> = [cannyHeh, cannyNah, cannyNyeh];
 
-        cannySounds[1].play;
-
-        trace(cannySounds);
+        cannySounds[randomNumber].play();
+        // trace(cannySounds);
     }
 }

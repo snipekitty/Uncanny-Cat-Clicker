@@ -14,13 +14,16 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
- 		var mainBackground = new FlxBackdrop(AssetPaths.background__png);
-		mainBackground.velocity.set(25,25);
+		var background = new FlxSprite();
+		background.loadGraphic(AssetPaths.bliss__png);
+ 		var catBackground = new FlxBackdrop(AssetPaths.background__png);
+		catBackground.velocity.set(25,25);
+		add(background);
+		//add(catBackground);
 
 		var waveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 10, -1, 4);
-		var waveBackground = new FlxEffectSprite(mainBackground, [waveEffect]);
+		var waveBackground = new FlxEffectSprite(catBackground, [waveEffect]);
 		add(waveBackground);
-		add(mainBackground);
 		
 		var catClicker = new CatClicker();
 		add(catClicker);
