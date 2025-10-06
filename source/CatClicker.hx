@@ -1,5 +1,6 @@
 package;
 
+import openfl.display.FPS;
 import flixel.util.FlxSort;
 import flixel.math.FlxRandom;
 import flixel.sound.FlxSound;
@@ -10,14 +11,7 @@ import flixel.FlxSprite;
 import MainHud;
 
 class CatClicker extends FlxSprite
-{
-    // sounds i suppose
-    static var cannyHeh:FlxSound;
-    static var cannyNah:FlxSound;
-    static var cannyNyeh:FlxSound;
-
-    static var randomNumber:Int;
-    
+{    
     // the cat that you can click
     public function new() {
         super();
@@ -40,7 +34,6 @@ class CatClicker extends FlxSprite
             FlxTween.tween(this, { "scale.x": 0.55, "scale.y": 0.55}, 0.1, { ease: FlxEase.elasticOut });
             if(FlxG.mouse.justReleased) 
             {
-                trace(randomNumber);
                 playCannySounds();
                 FlxTween.cancelTweensOf(this);
                 MainHud.updateMilkText();
@@ -53,11 +46,11 @@ class CatClicker extends FlxSprite
 
     function playCannySounds()
     {
-        cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
-        cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
-        cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
+        var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
+        var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
+        var cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
 
-        randomNumber = FlxG.random.int(0, 2);
+        var randomNumber = FlxG.random.int(0, 2);
 
         var cannySounds:Array<FlxSound> = [cannyHeh, cannyNah, cannyNyeh];
 
