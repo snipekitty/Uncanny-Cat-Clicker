@@ -1,8 +1,5 @@
 package;
 
-import openfl.display.FPS;
-import flixel.util.FlxSort;
-import flixel.math.FlxRandom;
 import flixel.sound.FlxSound;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -46,15 +43,19 @@ class CatClicker extends FlxSprite
 
     function playCannySounds()
     {
+        //variable setup ( load every time sound is played, should be destroyed to load again )
         var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
         var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
         var cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
-
+        // randomnumber should only be used here!!!!
         var randomNumber = FlxG.random.int(0, 2);
 
         var cannySounds:Array<FlxSound> = [cannyHeh, cannyNah, cannyNyeh];
 
+        // actual code that needs to run
         cannySounds[randomNumber].play();
-        // trace(cannySounds);
+        cannySounds[randomNumber].autoDestroy;
+        trace(cannySounds);
+        trace(randomNumber);
     }
 }
