@@ -44,6 +44,7 @@ class CatClicker extends FlxSprite
     function playCannySounds()
     {
         //variable setup ( load every time sound is played, should be destroyed to load again )
+        //P.S it doesnt actually remove the sound from memory, so fix later
         var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
         var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
         var cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
@@ -55,7 +56,7 @@ class CatClicker extends FlxSprite
         // actual code that needs to run
         cannySounds[randomNumber].play();
         cannySounds[randomNumber].autoDestroy;
-        trace(cannySounds);
-        trace(randomNumber);
+        //trace(cannySounds);
+        //trace(randomNumber);
     }
 }

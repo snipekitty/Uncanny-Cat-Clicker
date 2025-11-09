@@ -11,11 +11,15 @@ class PlayState extends FlxState
 {
 	var catClicker:CatClicker;
 	var mainHud:MainHud;
+	var shopData:ShopData;
+
 
 	override public function create()
 	{
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.bliss__png);
+		//removes white line, trust me this is needed
+		background.scale.set(1.01, 1.01);
 
  		var catBackground = new FlxBackdrop(AssetPaths.background__png);
 		catBackground.alpha = 0.5;
@@ -29,6 +33,9 @@ class PlayState extends FlxState
 
 		var mainHud = new MainHud();
 		add(mainHud);
+
+		var shopData = new ShopData();
+        add(shopData);
 
 		FlxG.cameras.bgColor = 0xffffffff;
 
