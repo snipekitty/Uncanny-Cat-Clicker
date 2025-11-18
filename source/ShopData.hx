@@ -13,19 +13,25 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     static var extraClickTest:FlxSprite;
     var extraShopItemTest:FlxSprite;
 
-    static var shopArray:Array<FlxSprite> = [extraClickTest];
+    static var shopArray:Array<FlxSprite>;
 
     public function new() 
     {
         super();
 
-        var extraClickTest = new FlxSprite();
+        extraClickTest = new FlxSprite();
         extraClickTest.makeGraphic(150, 100, FlxColor.WHITE);
         extraClickTest.setPosition(FlxG.width - extraClickTest.width, 100);
 
         add(extraClickTest);
 
-        //shopArray[0].kill();
+        extraShopItemTest = new FlxSprite();
+        extraShopItemTest.makeGraphic(150, 100, FlxColor.WHITE);
+        extraShopItemTest.setPosition(FlxG.width - extraShopItemTest.width, extraClickTest.y + 100);
+
+        shopArray = [extraClickTest, extraShopItemTest];
+
+        shopArray[0].kill();
 
         var uncannyShopPrices:Array<Float> = [10, 100];    
     }
@@ -39,11 +45,11 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     {
         if(MainHud.isShopOpened == true)
         {
-
+            shopArray[0].revive();
         }
         else
         {
-            
+            shopArray[0].kill();
         }
     }
 }
