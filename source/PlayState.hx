@@ -1,10 +1,10 @@
 package;
 
-import flixel.addons.display.FlxBackdrop;
-import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.display.FlxBackdrop;
+import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 
 class PlayState extends FlxState
@@ -12,8 +12,7 @@ class PlayState extends FlxState
 	var catClicker:CatClicker;
 	var mainHud:MainHud;
 	var shopData:ShopData;
-
-
+	
 	override public function create()
 	{
 		var background = new FlxSprite();

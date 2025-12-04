@@ -1,15 +1,17 @@
 package;
 
+import MainHud;
+import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.sound.FlxSound;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.FlxG;
-import flixel.FlxSprite;
-import MainHud;
 
 class CatClicker extends FlxSprite
 {    
-    // the cat that you can click
+    var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
+	var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
+	var cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
     public function new() {
         super();
         loadGraphic(AssetPaths.CannyCat__png);
@@ -43,18 +45,13 @@ class CatClicker extends FlxSprite
 
     function playCannySounds()
     {
-        //P.S it doesnt actually remove the sound from memory, so fix later
-        var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
-        var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
-        var cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
-        // randomnumber should only be used here!!!!
-        var randomNumber = FlxG.random.int(0, 2);
+		var randomNumber = FlxG.random.int(0, 2);
 
-        var cannySounds:Array<FlxSound> = [cannyHeh, cannyNah, cannyNyeh];
+		var cannySounds:Array<FlxSound> = [cannyHeh, cannyNah, cannyNyeh];
 
-         cannySounds[randomNumber].play();
-        cannySounds[randomNumber].autoDestroy;
-        //trace(cannySounds);
-        //trace(randomNumber);
+		cannySounds[randomNumber].play();
+		// cannySounds[randomNumber].autoDestroy;
+		// trace(cannySounds);
+		trace(randomNumber);
     }
 }

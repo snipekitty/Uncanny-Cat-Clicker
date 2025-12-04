@@ -1,19 +1,19 @@
 package;
 
-import openfl.display.FPS;
+import ShopData;
 import flixel.FlxG;
-import flixel.tweens.FlxTween;
-import flixel.tweens.FlxEase;
+import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
-import flixel.FlxSprite;
-import ShopData;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
+import openfl.display.FPS;
 
 class MainHud extends FlxTypedGroup<FlxSprite>
 {
     // hud for the the milk counter
     static var milkText:FlxText;
-    static var milkNum:Float = 0;
+    public static var milkNum:Float = 0;
     // todo: work on shop
 
     static var clickBonus:Float = 0;
@@ -36,8 +36,6 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         shopIcon.scale.set(0.1, 0.1);
         shopIcon.updateHitbox();
 
-
-
         add(shopIcon);
         add(milkText);
     }
@@ -55,9 +53,9 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 
     static public function updateMilkText() 
     {
-        // updates milknumber
+        // adds 1 + clickbonus
         milkNum = ((milkNum) + (1 + (clickBonus)));
-        trace(milkNum);
+		trace(milkNum);
     }
 
     static public function waitBeforeCPS()
