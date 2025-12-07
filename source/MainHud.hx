@@ -7,6 +7,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import openfl.display.FPS;
 
 class MainHud extends FlxTypedGroup<FlxSprite>
@@ -17,7 +18,8 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     // todo: work on shop
 
     static var clickBonus:Float = 0;
-    static var clicksPerSecond:Float = 0;
+    public static var clicksPerSecond:Float = 0;
+    public static var cpsText:FlxText;
 
     // shop, names are pretty self explanatory
     var shopIcon:FlxSprite;
@@ -32,12 +34,16 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         milkText = new FlxText(100, 0, "0 Milk", 30);
         milkText.font = "assets/fonts/Comic Sans MS.ttf";
 
+        cpsText = new FlxText(100, 32, "Milk Per Second: 0", 20);
+        cpsText.font = "assets/fonts/Comic Sans MS.ttf";
+
         shopIcon = new FlxSprite(550, 20, AssetPaths.ShopIcon__png);
         shopIcon.scale.set(0.1, 0.1);
         shopIcon.updateHitbox();
 
         add(shopIcon);
         add(milkText);
+        add(cpsText);
     }
 
     override public function update(elapsed:Float)
@@ -47,20 +53,19 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         autoClickDelay += 1 * elapsed;
         waitBeforeCPS();
         milkText.text = ((milkNum) + " Milk");
+        cpsText.text = ("Milk Per Second: " + (clicksPerSecond));
         
         shopClicked();
     }
 
     static public function updateMilkText() 
     {
-        // adds 1 + clickbonus
         milkNum = ((milkNum) + (1 + (clickBonus)));
-		trace(milkNum);
+		//trace(milkNum);
     }
 
     static public function waitBeforeCPS()
     {
-        // also updates milknumber but could probably be changed lowkey
         if(autoClickDelay >= 1) {
             autoClickDelay = 0;
             milkNum = ((milkNum) + (clicksPerSecond));

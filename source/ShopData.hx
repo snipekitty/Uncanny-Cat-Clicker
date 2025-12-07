@@ -4,6 +4,7 @@ import MainHud;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
@@ -11,10 +12,11 @@ import flixel.util.FlxColor;
 class ShopData extends FlxTypedGroup<FlxSprite>
 {
     static var extraClickTest:FlxSprite;
-    var extraShopItemTest:FlxSprite;
+    static var extraShopItemTest:FlxSprite;
 
     static var shopArray:Array<FlxSprite>;
     static var shopPrices:Array<Float>;
+    static var shopDescriptions:Array<FlxText>;
 
     public function new() 
     {
@@ -24,22 +26,28 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         extraClickTest.makeGraphic(150, 100, FlxColor.WHITE);
         extraClickTest.setPosition(FlxG.width - extraClickTest.width, 100);
 
-        add(extraClickTest);
-
         extraShopItemTest = new FlxSprite();
         extraShopItemTest.makeGraphic(150, 100, FlxColor.WHITE);
 		extraShopItemTest.setPosition(FlxG.width - extraShopItemTest.width, extraClickTest.y + 110);
 
-		add(extraShopItemTest);
-
         shopArray = [extraClickTest, extraShopItemTest];
 
-		for (shops in 0...shopArray.length)
-		{
-			shopArray[shops].kill();
-		}
+        shopPrices = [10, 100];
 
-        shopPrices = [10, 100];    
+        shopDescriptions = [new FlxText(extraClickTest.x, extraClickTest.y, 0, "I love you! <3", 20), new FlxText(extraShopItemTest.x, extraShopItemTest.y, 0, "I hate you. </3", 20)];
+
+        for (descriptions in 0...shopDescriptions.length)
+        {
+            for (shops in 0...shopArray.length)
+		    {
+                add(shopArray[shops]);
+			    shopArray[shops].kill();
+
+                add(shopDescriptions[shops]);
+                shopDescriptions[shops].color = FlxColor.BLACK;
+                shopDescriptions[shops].kill();
+		    }
+        }
     }
 
     override public function update(elapsed:Float) 
@@ -47,6 +55,12 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         super.update(elapsed);
         shopItemIsClicked();
         buyableState();
+
+        for (descriptions in 0...shopDescriptions.length)
+        {
+            shopDescriptions[descriptions].scale.x = shopArray[descriptions].scale.x;
+            shopDescriptions[descriptions].scale.y = shopArray[descriptions].scale.y;
+        }
     }
 
     static public function showShopOpened() 
@@ -56,10 +70,12 @@ class ShopData extends FlxTypedGroup<FlxSprite>
             if(MainHud.isShopOpened == true)
             {
 			    shopArray[shops].revive();
+                shopDescriptions[shops].revive();
 		    }
             else
             {
 		        shopArray[shops].kill();
+                shopDescriptions[shops].kill();
 		    }
         }
     }
@@ -74,7 +90,8 @@ class ShopData extends FlxTypedGroup<FlxSprite>
                 {
                     if(FlxG.mouse.justReleased)
                     {
-                        MainHud.milkNum = MainHud.milkNum - shopPrices[0]; 
+                        MainHud.milkNum = MainHud.milkNum - shopPrices[0];
+                        MainHud.clicksPerSecond = MainHud.clicksPerSecond + 10; 
                     }
                 }   
             }
@@ -112,11 +129,11 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         {
             if(FlxG.mouse.overlaps(shopArray[shops]))
             {
-                FlxTween.tween(shopArray[shops], { "scale.x": 0.8, "scale.y": 0.8}, 0.1, { ease: FlxEase.elasticOut });
+                FlxTween.tween(shopArray[shops], { "scale.x": 0.9, "scale.y": 0.9}, 0.1, { ease: FlxEase.elasticOut });
                 if(FlxG.mouse.justReleased) 
                 {
                     FlxTween.cancelTweensOf(shopArray[shops]);
-                    FlxTween.tween(shopArray[shops], { "scale.x": 0.4, "scale.y": 0.4}, 0.5, { ease: FlxEase.elasticOut });
+                    FlxTween.tween(shopArray[shops], { "scale.x": 0.8, "scale.y": 0.8}, 0.5, { ease: FlxEase.elasticOut });
                 }
             } else {
                 FlxTween.tween(shopArray[shops], { "scale.x": 1, "scale.y": 1}, 0.1, { ease: FlxEase.elasticOut });
