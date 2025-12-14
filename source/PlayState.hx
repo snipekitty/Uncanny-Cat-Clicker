@@ -3,9 +3,6 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxBackdrop;
-import flixel.addons.effects.chainable.FlxEffectSprite;
-import flixel.addons.effects.chainable.FlxWaveEffect;
 
 class PlayState extends FlxState
 {
@@ -19,23 +16,24 @@ class PlayState extends FlxState
 		background.loadGraphic(AssetPaths.bliss__png);
 
 		background.scale.set(1.01, 1.01);
-
+/*
  		var catBackground = new FlxBackdrop(AssetPaths.background__png);
 		catBackground.alpha = 0.25;
 		catBackground.scale.set(2, 2);
 		catBackground.velocity.set(25,25);
+		*/
 		
 		add(background);
-		add(catBackground);
+		//add(catBackground);
 
 		var catClicker = new CatClicker();
 		add(catClicker);
 
-		var mainHud = new MainHud();
-		add(mainHud);
-
 		var shopData = new ShopData();
         add(shopData);
+
+		var mainHud = new MainHud();
+		add(mainHud);
 		
 		FlxG.cameras.bgColor = 0xffffffff;
 

@@ -4,6 +4,7 @@ import MainHud;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -14,9 +15,10 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     static var extraClickTest:FlxSprite;
     static var extraShopItemTest:FlxSprite;
 
-    static var shopArray:Array<FlxSprite>;
+    public static var shopArray:Array<FlxSprite>;
     static var shopPrices:Array<Float>;
-    static var shopDescriptions:Array<FlxText>;
+    public static var shopDescriptions:Array<FlxText>;
+    static var shopCPSSetter:Array<Float>;
 
     public function new() 
     {
@@ -34,20 +36,13 @@ class ShopData extends FlxTypedGroup<FlxSprite>
 
         shopPrices = [10, 100];
 
-        shopDescriptions = [new FlxText(extraClickTest.x, extraClickTest.y, 0, "I love you! <3", 20), new FlxText(extraShopItemTest.x, extraShopItemTest.y, 0, "I hate you. </3", 20)];
+        shopCPSSetter = [1, 10];
 
-        for (descriptions in 0...shopDescriptions.length)
-        {
-            for (shops in 0...shopArray.length)
-		    {
-                add(shopArray[shops]);
-			    shopArray[shops].kill();
-
-                add(shopDescriptions[shops]);
-                shopDescriptions[shops].color = FlxColor.BLACK;
-                shopDescriptions[shops].kill();
-		    }
-        }
+        // milk should probably have an icon to go along with it, thus replacing "price" with said icon
+        // i dont really know how to format how the shop looks so todo i guess
+        shopDescriptions = 
+        [new FlxText(extraClickTest.x, extraClickTest.y, 0, "Price: " + shopPrices[0], 15), 
+        new FlxText(extraShopItemTest.x, extraShopItemTest.y, 0, "Price: " + shopPrices[1], 15)];
     }
 
     override public function update(elapsed:Float) 
@@ -55,56 +50,75 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         super.update(elapsed);
         shopItemIsClicked();
         buyableState();
+        scrollShop();
 
         for (descriptions in 0...shopDescriptions.length)
         {
+            shopDescriptions[descriptions].x = shopArray[descriptions].x;
+            shopDescriptions[descriptions].y = shopArray[descriptions].y;
+
             shopDescriptions[descriptions].scale.x = shopArray[descriptions].scale.x;
             shopDescriptions[descriptions].scale.y = shopArray[descriptions].scale.y;
+
+            shopDescriptions[descriptions].alpha = shopArray[descriptions].alpha;
         }
     }
 
-    static public function showShopOpened() 
+    static public function shopOpened() 
     {
         for (shops in 0...shopArray.length)
         {
             if(MainHud.isShopOpened == true)
             {
+                MainHud.shopIcon.x = MainHud.shopIcon.x;
 			    shopArray[shops].revive();
                 shopDescriptions[shops].revive();
+                MainHud.shopBackground.revive();
 		    }
             else
             {
+                MainHud.shopIcon.x = MainHud.shopIcon.x;
 		        shopArray[shops].kill();
                 shopDescriptions[shops].kill();
-		    }
+                MainHud.shopBackground.kill();
+		    }    
         }
     }
+
     function shopItemIsClicked()
     {
-        if(shopArray[0].alive == true)
+        if(!FlxG.mouse.overlaps(MainHud.shopIcon))
         {
-            clickAnim();
-            if(MainHud.milkNum >= shopPrices[0])
+            if(shopArray[0].alive == true)
             {
-                if(FlxG.mouse.overlaps(shopArray[0]))
+                clickAnim();
+                if(MainHud.milkNum >= shopPrices[0])
                 {
-                    if(FlxG.mouse.justReleased)
+                    if(FlxG.mouse.overlaps(shopArray[0]))
                     {
-                        MainHud.milkNum = MainHud.milkNum - shopPrices[0];
-                        MainHud.clicksPerSecond = MainHud.clicksPerSecond + 10; 
-                    }
-                }   
-            }
+                        if(FlxG.mouse.justReleased)
+                        {
+                            MainHud.milkNum = MainHud.milkNum - shopPrices[0];
+                            shopPrices[0] = FlxMath.roundDecimal(shopPrices[0] * 1.25, 0);
+                            shopDescriptions[0].text = "Price: " + shopPrices[0];
+                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[0]; 
+                        }
+                    }   
+                }
 
-            if(MainHud.milkNum >= shopPrices[1])
-            {
-                if(FlxG.mouse.overlaps(shopArray[1]))
+                if(MainHud.milkNum >= shopPrices[1])
                 {
-                    if(FlxG.mouse.justReleased)
+                    if(FlxG.mouse.overlaps(shopArray[1]))
                     {
-                        MainHud.milkNum = MainHud.milkNum - shopPrices[1]; 
-                    }
-                }   
+                        if(FlxG.mouse.justReleased)
+                        {
+                            MainHud.milkNum = MainHud.milkNum - shopPrices[1]; 
+                            shopPrices[1] = FlxMath.roundDecimal(shopPrices[1] * 1.25, 0);
+                            shopDescriptions[1].text = "Price: " + shopPrices[1];
+                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[1]; 
+                        }
+                    }   
+                }
             }
         }
     }
@@ -137,6 +151,23 @@ class ShopData extends FlxTypedGroup<FlxSprite>
                 }
             } else {
                 FlxTween.tween(shopArray[shops], { "scale.x": 1, "scale.y": 1}, 0.1, { ease: FlxEase.elasticOut });
+            }
+        }
+    }
+
+    function scrollShop() 
+    {
+        if (MainHud.shopBackground.alive == true)
+        {
+            for (shops in 0...shopArray.length)
+            {
+                if(FlxG.mouse.wheel > 0)
+                {
+                    shopArray[shops].y = shopArray[shops].y - (FlxG.mouse.wheel) - 10;
+                } else if (FlxG.mouse.wheel < 0) 
+                {
+                    shopArray[shops].y = shopArray[shops].y - (FlxG.mouse.wheel) + 10;   
+                }
             }
         }
     }
