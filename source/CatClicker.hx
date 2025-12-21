@@ -15,7 +15,8 @@ class CatClicker extends FlxSprite
 
     var cannySounds:Array<FlxSound>;
 
-    public function new() {
+    public function new() 
+    {
         super();
         loadGraphic(AssetPaths.CannyCat__png);
         scale.set(0.5, 0.5);

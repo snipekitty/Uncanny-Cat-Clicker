@@ -4,6 +4,7 @@ import ShopData;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -37,6 +38,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 
         cpsText = new FlxText(100, 32, "Milk Per Second: 0", 20);
         cpsText.font = "assets/fonts/Comic Sans MS.ttf";
+
 
         shopIcon = new FlxSprite(550, 20, AssetPaths.ShopIcon__png);
         shopIcon.scale.set(0.1, 0.1);
@@ -73,11 +75,11 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         if (clicksPerSecond > 0)
         {
             autoClickDelay += 1 * elapsed;
+            milkNum = (((milkNum) + (clicksPerSecond) * elapsed));
         }
         waitBeforeCPS();
-        milkText.text = ((milkNum) + " Milk");
+        milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " Milk");
         cpsText.text = ("Milk Per Second: " + (clicksPerSecond));
-        
         shopClicked();
     }
 
@@ -91,7 +93,6 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     {
         if(autoClickDelay >= 1) {
             autoClickDelay = 0;
-            milkNum = ((milkNum) + (clicksPerSecond));
         }
     }
 

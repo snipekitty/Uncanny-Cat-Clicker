@@ -9,6 +9,7 @@ class PlayState extends FlxState
 	var catClicker:CatClicker;
 	var mainHud:MainHud;
 	var shopData:ShopData;
+	var randomTreat:RandomTreat;
 	
 	override public function create()
 	{
@@ -31,6 +32,9 @@ class PlayState extends FlxState
 
 		var shopData = new ShopData();
         add(shopData);
+
+		var randomTreat = new RandomTreat();
+		add(randomTreat);
 
 		var mainHud = new MainHud();
 		add(mainHud);
