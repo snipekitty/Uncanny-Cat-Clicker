@@ -17,7 +17,7 @@ class PlayState extends FlxState
 		background.loadGraphic(AssetPaths.bliss__png);
 
 		background.scale.set(1.01, 1.01);
-/*
+		/*
  		var catBackground = new FlxBackdrop(AssetPaths.background__png);
 		catBackground.alpha = 0.25;
 		catBackground.scale.set(2, 2);

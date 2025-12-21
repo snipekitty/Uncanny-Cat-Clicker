@@ -1,5 +1,6 @@
 package;
 
+import RandomTreat;
 import ShopData;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -79,7 +80,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         }
         waitBeforeCPS();
         milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " Milk");
-        cpsText.text = ("Milk Per Second: " + (clicksPerSecond));
+
         shopClicked();
     }
 
