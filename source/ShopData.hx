@@ -25,12 +25,12 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         super();
 
         extraClickTest = new FlxSprite();
-        extraClickTest.makeGraphic(150, 100, FlxColor.WHITE);
-        extraClickTest.setPosition(FlxG.width - extraClickTest.width, 100);
-
+        extraClickTest.makeGraphic(180, 120, FlxColor.WHITE);
+        extraClickTest.setPosition(FlxG.width - extraClickTest.width, 160);
+        
         extraShopItemTest = new FlxSprite();
-        extraShopItemTest.makeGraphic(150, 100, FlxColor.WHITE);
-		extraShopItemTest.setPosition(FlxG.width - extraShopItemTest.width, extraClickTest.y + 110);
+        extraShopItemTest.makeGraphic(180, 120, FlxColor.WHITE);
+		extraShopItemTest.setPosition(FlxG.width - extraShopItemTest.width, extraClickTest.y + 130);
 
         shopArray = [extraClickTest, extraShopItemTest];
 
@@ -70,14 +70,12 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         {
             if(MainHud.isShopOpened == true)
             {
-                MainHud.shopIcon.x = MainHud.shopIcon.x;
 			    shopArray[shops].revive();
                 shopDescriptions[shops].revive();
                 MainHud.shopBackground.revive();
 		    }
             else
             {
-                MainHud.shopIcon.x = MainHud.shopIcon.x;
 		        shopArray[shops].kill();
                 shopDescriptions[shops].kill();
                 MainHud.shopBackground.kill();
@@ -89,9 +87,9 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     {
         if(!FlxG.mouse.overlaps(MainHud.shopIcon))
         {
+            clickAnim();
             if(shopArray[0].alive == true)
             {
-                clickAnim();
                 if(MainHud.milkNum >= shopPrices[0])
                 {
                     if(FlxG.mouse.overlaps(shopArray[0]))

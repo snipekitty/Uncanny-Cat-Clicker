@@ -15,11 +15,13 @@ class CatClicker extends FlxSprite
 
     var cannySounds:Array<FlxSound>;
 
+    var defaultScale:Float = 0.8;
+
     public function new() 
     {
         super();
         loadGraphic(AssetPaths.CannyCat__png);
-        scale.set(0.5, 0.5);
+        scale.set(0.8, 0.8);
         updateHitbox();
         screenCenter();
     }
@@ -34,17 +36,17 @@ class CatClicker extends FlxSprite
     {
         if(FlxG.mouse.overlaps(this))
         {
-            FlxTween.tween(this, { "scale.x": 0.55, "scale.y": 0.55}, 0.1, { ease: FlxEase.linear });
+            FlxTween.tween(this, { "scale.x": defaultScale + 0.05, "scale.y": defaultScale + 0.05}, 0.1, { ease: FlxEase.linear });
             if(FlxG.mouse.justReleased) 
             {
                 playCannySounds();
                 FlxTween.cancelTweensOf(this);
                 MainHud.updateMilkText();
-                FlxTween.tween(this, { "scale.x": 0.2, "scale.y": 0.2}, 0.5, { ease: FlxEase.linear });
+                FlxTween.tween(this, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
             }
         } else {
             FlxTween.cancelTweensOf(this);
-            FlxTween.tween(this, { "scale.x": 0.5, "scale.y": 0.5}, 0.1, { ease: FlxEase.linear });
+            FlxTween.tween(this, { "scale.x": defaultScale, "scale.y": defaultScale}, 0.1, { ease: FlxEase.linear });
         }
     }
 

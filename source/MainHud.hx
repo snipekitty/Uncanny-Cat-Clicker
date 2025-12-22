@@ -22,6 +22,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     public static var cpsText:FlxText;
 
     public static var shopIcon:FlxSprite;
+    static var shopIconScale:Float = 0.2;
     public static var shopBackground:FlxSprite;
     public static var isShopOpened:Bool = false;
 
@@ -31,22 +32,29 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     public function new() 
     {
         super();
-        milkText = new FlxText(100, 0, "0 Milk", 30);
+        milkText = new FlxText(100, 0, "0 Milk", 60);
         milkText.font = "assets/fonts/Comic Sans MS.ttf";
         milkText.borderStyle = OUTLINE;
         milkText.borderColor = FlxColor.BLACK;
-        milkText.borderSize = 1;
+        milkText.borderSize = 2;
+        milkText.antialiasing = true;
 
-        cpsText = new FlxText(100, 32, "Milk Per Second: 0", 20);
+        cpsText = new FlxText(100, 60, "Milk Per Second: 0", 40);
         cpsText.font = "assets/fonts/Comic Sans MS.ttf";
+        cpsText.borderStyle = OUTLINE;
+        cpsText.borderColor = FlxColor.BLACK;
+        cpsText.borderSize = 1;
+        cpsText.antialiasing = true;
 
 
-        shopIcon = new FlxSprite(550, 20, AssetPaths.ShopIcon__png);
-        shopIcon.scale.set(0.1, 0.1);
+        shopIcon = new FlxSprite(0, 0, AssetPaths.ShopIcon__png);
+        shopIcon.scale.set(0.2, 0.2);
+        shopIcon.updateHitbox();
+        shopIcon.setPosition(FlxG.width - shopIcon.width - 20, 20);
         shopIcon.updateHitbox();
 
         shopBackground = new FlxSprite();
-        shopBackground.makeGraphic(160, 480, FlxColor.GREEN);
+        shopBackground.makeGraphic(200, 720, FlxColor.GREEN);
         shopBackground.setPosition(FlxG.width - shopBackground.width);
 
         var shopArray = ShopData.shopArray;
@@ -59,6 +67,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 		{
             add(shopArray[shops]);
 		    shopArray[shops].kill();
+            shopArray[shops].updateHitbox();
 
             add(shopDescriptions[shops]);
             shopDescriptions[shops].color = FlxColor.BLACK;
@@ -80,7 +89,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         }
         waitBeforeCPS();
         milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " Milk");
-
+        cpsText.text = ("Milk Per Second: " + (clicksPerSecond));
         shopClicked();
     }
 
@@ -101,17 +110,17 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     {
         if(FlxG.mouse.overlaps(shopIcon))
         {
-            FlxTween.tween(shopIcon, { "scale.x": 0.12, "scale.y": 0.12}, 0.1, { ease: FlxEase.elasticOut });
+            FlxTween.tween(shopIcon, { "scale.x": shopIconScale + 0.01, "scale.y": shopIconScale + 0.01}, 0.1, { ease: FlxEase.linear });
             if(FlxG.mouse.justReleased) 
             {
                 isShopOpened = !isShopOpened;
                 ShopData.shopOpened();
                 FlxTween.cancelTweensOf(shopIcon);
-                FlxTween.tween(shopIcon, { "scale.x": 0.09, "scale.y": 0.09}, 0.5, { ease: FlxEase.elasticOut });
+                FlxTween.tween(shopIcon, { "scale.x": shopIconScale - 0.03, "scale.y": shopIconScale - 0.03}, 0.5, { ease: FlxEase.linear });
                 //trace(isShopOpened);
             }
         } else {
-            FlxTween.tween(shopIcon, { "scale.x": 0.1, "scale.y": 0.1}, 0.1, { ease: FlxEase.elasticOut });
+            FlxTween.tween(shopIcon, { "scale.x": shopIconScale, "scale.y": shopIconScale}, 0.1, { ease: FlxEase.linear });
         }
     }
 }
