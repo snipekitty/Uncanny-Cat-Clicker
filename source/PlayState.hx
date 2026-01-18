@@ -9,7 +9,9 @@ class PlayState extends FlxState
 	var catClicker:CatClicker;
 	var mainHud:MainHud;
 	var shopData:ShopData;
-	var randomTreat:RandomTreat;
+	var catTreat:CatTreat;
+
+	var clickableObj:Array<FlxSprite>;
 	
 	override public function create()
 	{
@@ -18,15 +20,8 @@ class PlayState extends FlxState
 
 		background.scale.set(3, 3);
 		background.y = background.y + 50;
-		/*
- 		var catBackground = new FlxBackdrop(AssetPaths.background__png);
-		catBackground.alpha = 0.25;
-		catBackground.scale.set(2, 2);
-		catBackground.velocity.set(25,25);
-		*/
 		
 		add(background);
-		//add(catBackground);
 
 		var catClicker = new CatClicker();
 		add(catClicker);
@@ -34,8 +29,8 @@ class PlayState extends FlxState
 		var shopData = new ShopData();
         add(shopData);
 
-		var randomTreat = new RandomTreat();
-		add(randomTreat);
+		var catTreat = new CatTreat();
+		add(catTreat);
 
 		var mainHud = new MainHud();
 		add(mainHud);

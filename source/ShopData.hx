@@ -1,6 +1,7 @@
 package;
 
 import MainHud;
+import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -9,6 +10,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.util.FlxSignal;
 
 class ShopData extends FlxTypedGroup<FlxSprite>
 {
@@ -16,7 +18,7 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     static var extraShopItemTest:FlxSprite;
 
     public static var shopArray:Array<FlxSprite>;
-    static var shopPrices:Array<Float>;
+    public static var shopPrices:Array<Float>;
     public static var shopDescriptions:Array<FlxText>;
     static var shopCPSSetter:Array<Float>;
 
@@ -38,7 +40,6 @@ class ShopData extends FlxTypedGroup<FlxSprite>
 
         shopCPSSetter = [1, 10];
 
-        // milk should probably have an icon to go along with it, thus replacing "price" with said icon
         // i dont really know how to format how the shop looks so todo i guess
         shopDescriptions = 
         [new FlxText(extraClickTest.x, extraClickTest.y, 0, "Price: " + shopPrices[0], 15), 
@@ -87,7 +88,6 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     {
         if(!FlxG.mouse.overlaps(MainHud.shopIcon))
         {
-            clickAnim();
             if(shopArray[0].alive == true)
             {
                 if(MainHud.milkNum >= shopPrices[0])
@@ -99,7 +99,15 @@ class ShopData extends FlxTypedGroup<FlxSprite>
                             MainHud.milkNum = MainHud.milkNum - shopPrices[0];
                             shopPrices[0] = FlxMath.roundDecimal(shopPrices[0] * 1.25, 0);
                             shopDescriptions[0].text = "Price: " + shopPrices[0];
-                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[0]; 
+                            MainHud.cpsOld += shopCPSSetter[0];
+                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[0];
+                            switch (CatTreat.isClicked)
+                            {
+                                case true:
+                                    MainHud.clicksPerSecond = MainHud.cpsOld * CatTreat.multNumbers[CatTreat.randomNumber];
+                                case false:
+                                    //do nothing
+                            }
                         }
                     }   
                 }
@@ -113,7 +121,15 @@ class ShopData extends FlxTypedGroup<FlxSprite>
                             MainHud.milkNum = MainHud.milkNum - shopPrices[1]; 
                             shopPrices[1] = FlxMath.roundDecimal(shopPrices[1] * 1.25, 0);
                             shopDescriptions[1].text = "Price: " + shopPrices[1];
-                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[1]; 
+                            MainHud.cpsOld += shopCPSSetter[0];
+                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[1];
+                            switch (CatTreat.isClicked)
+                            {
+                                case true:
+                                    MainHud.clicksPerSecond = MainHud.cpsOld * CatTreat.multNumbers[CatTreat.randomNumber];
+                                case false:
+                                    //do nothing
+                            }
                         }
                     }   
                 }
@@ -123,32 +139,13 @@ class ShopData extends FlxTypedGroup<FlxSprite>
 
     function buyableState()
     {
-        for (check in 0...shopPrices.length)
+        for (prices in 0...shopPrices.length)
         {
-            // this could be a switch i think?
-            if(MainHud.milkNum < shopPrices[check])
+            if(MainHud.milkNum < shopPrices[prices])
             {
-                shopArray[check].alpha = 0.5;
-            } else if(MainHud.milkNum >= shopPrices[check]) {
-                shopArray[check].alpha = 1;
-            }
-        }
-    }
-
-    function clickAnim() 
-    {
-        for (shops in 0...shopArray.length)
-        {
-            if(FlxG.mouse.overlaps(shopArray[shops]))
-            {
-                FlxTween.tween(shopArray[shops], { "scale.x": 0.9, "scale.y": 0.9}, 0.1, { ease: FlxEase.elasticOut });
-                if(FlxG.mouse.justReleased) 
-                {
-                    FlxTween.cancelTweensOf(shopArray[shops]);
-                    FlxTween.tween(shopArray[shops], { "scale.x": 0.8, "scale.y": 0.8}, 0.5, { ease: FlxEase.elasticOut });
-                }
-            } else {
-                FlxTween.tween(shopArray[shops], { "scale.x": 1, "scale.y": 1}, 0.1, { ease: FlxEase.elasticOut });
+                shopArray[prices].alpha = 0.5;
+            } else if(MainHud.milkNum >= shopPrices[prices]) {
+                shopArray[prices].alpha = 1;
             }
         }
     }

@@ -1,6 +1,5 @@
 package;
 
-import RandomTreat;
 import ShopData;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -17,8 +16,9 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     static var milkText:FlxText;
     public static var milkNum:Float = 0;
 
-    static var clickBonus:Float = 0;
+    public static var clickBonus:Float = 0;
     public static var clicksPerSecond:Float = 0;
+    public static var cpsOld:Float = 0;
     public static var cpsText:FlxText;
 
     public static var shopIcon:FlxSprite;
@@ -45,7 +45,6 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         cpsText.borderColor = FlxColor.BLACK;
         cpsText.borderSize = 1;
         cpsText.antialiasing = true;
-
 
         shopIcon = new FlxSprite(0, 0, AssetPaths.ShopIcon__png);
         shopIcon.scale.set(0.2, 0.2);
@@ -96,7 +95,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     static public function updateMilkText() 
     {
         milkNum = ((milkNum) + (1 + (clickBonus)));
-		//trace(milkNum);
+		trace(milkNum);
     }
 
     static public function waitBeforeCPS()
@@ -110,17 +109,13 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     {
         if(FlxG.mouse.overlaps(shopIcon))
         {
-            FlxTween.tween(shopIcon, { "scale.x": shopIconScale + 0.01, "scale.y": shopIconScale + 0.01}, 0.1, { ease: FlxEase.linear });
             if(FlxG.mouse.justReleased) 
             {
                 isShopOpened = !isShopOpened;
                 ShopData.shopOpened();
                 FlxTween.cancelTweensOf(shopIcon);
-                FlxTween.tween(shopIcon, { "scale.x": shopIconScale - 0.03, "scale.y": shopIconScale - 0.03}, 0.5, { ease: FlxEase.linear });
                 //trace(isShopOpened);
             }
-        } else {
-            FlxTween.tween(shopIcon, { "scale.x": shopIconScale, "scale.y": shopIconScale}, 0.1, { ease: FlxEase.linear });
         }
     }
 }
