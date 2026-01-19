@@ -97,7 +97,7 @@ class ShopData extends FlxTypedGroup<FlxSprite>
                         if(FlxG.mouse.justReleased)
                         {
                             MainHud.milkNum = MainHud.milkNum - shopPrices[0];
-                            shopPrices[0] = FlxMath.roundDecimal(shopPrices[0] * 1.25, 0);
+                            shopPrices[0] = FlxMath.roundDecimal(shopPrices[0] * 1.15, 0);
                             shopDescriptions[0].text = "Price: " + shopPrices[0];
                             MainHud.cpsOld += shopCPSSetter[0];
                             MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[0];
@@ -119,7 +119,7 @@ class ShopData extends FlxTypedGroup<FlxSprite>
                         if(FlxG.mouse.justReleased)
                         {
                             MainHud.milkNum = MainHud.milkNum - shopPrices[1]; 
-                            shopPrices[1] = FlxMath.roundDecimal(shopPrices[1] * 1.25, 0);
+                            shopPrices[1] = FlxMath.roundDecimal(shopPrices[1] * 1.15, 0);
                             shopDescriptions[1].text = "Price: " + shopPrices[1];
                             MainHud.cpsOld += shopCPSSetter[0];
                             MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[1];

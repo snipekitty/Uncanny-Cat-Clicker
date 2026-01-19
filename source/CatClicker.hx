@@ -8,11 +8,15 @@ import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.ui.FlxBar;
+import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import openfl.display.BlendMode;
 
 class CatClicker extends FlxTypedGroup<FlxSprite>
 {   
     public static var cannyCat:FlxSprite;
+    var uncannyCat:FlxSprite;
 
     var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
 	var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
@@ -25,6 +29,9 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 
     var defaultScale:Float = 0.8;
 
+    var cannyMeter:FlxBar;
+    var canniness:Float = -0.5;
+
     public function new() 
     {
         super();
@@ -34,14 +41,44 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         cannyCat.scale.set(0.8, 0.8);
         cannyCat.updateHitbox();
         cannyCat.screenCenter();
-
+        //cannyCat.blend = BlendMode.MULTIPLY;
         add(cannyCat);
+
+        uncannyCat = new FlxSprite();
+        uncannyCat.loadGraphic(AssetPaths.UncannyCat__png);
+        uncannyCat.scale.set(0.8, 0.8);
+        uncannyCat.updateHitbox();
+        uncannyCat.screenCenter();
+        add(uncannyCat);
+
+        cannyMeter = new FlxBar(0, 0, BOTTOM_TO_TOP, 10, 100, 0, "Canniness", -0.5, 1, true);
+        cannyMeter.createFilledBar(FlxColor.WHITE, FlxColor.BLACK, false);
+        cannyMeter.scale.set(5, 5);
+        cannyMeter.updateHitbox();
+        cannyMeter.setPosition(0, 0);
+        cannyMeter.screenCenter(Y);
+        add(cannyMeter);
     }
 
     override public function update(elapsed:Float) 
     {
         super.update(elapsed);
         clicking();
+
+        cannyMeter.value = canniness;
+
+        uncannyCat.scale.x = cannyCat.scale.x;
+        uncannyCat.scale.y = cannyCat.scale.y;
+        uncannyCat.alpha = canniness;
+
+        if(FlxG.keys.pressed.LEFT)
+        {
+            canniness -= 0.01;
+            trace(canniness);
+        } else if(FlxG.keys.pressed.RIGHT){
+            canniness += 0.01;
+            trace(canniness);
+        }
     }
 
     function clicking() 

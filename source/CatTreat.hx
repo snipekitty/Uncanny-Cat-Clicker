@@ -36,6 +36,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
     var leaveTimer:FlxTimer;
 
     var clickSound = FlxG.sound.load(AssetPaths.squish__wav);
+    var spawnSound = FlxG.sound.load(AssetPaths.ding__wav);
     
     public function new()
     {
@@ -77,6 +78,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
                     isSpawned = true;
                     trace("spawned");
                     spawnTreat();
+                    spawnSound.play(true);
                 } else {
                     trace("failed");
                     spawnTimer = 0;
@@ -92,6 +94,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
                 isSpawned = true;
                 trace("spawned");
                 spawnTreat();
+                spawnSound.play(true);
             }
         }
         #end
