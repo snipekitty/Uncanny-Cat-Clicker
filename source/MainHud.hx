@@ -84,12 +84,19 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         if (clicksPerSecond > 0)
         {
             autoClickDelay += 1 * elapsed;
-            milkNum = (((milkNum) + (clicksPerSecond) * elapsed));
+            inTheNegatives();
+            if(CatClicker.canniness > 0)
+            {
+                milkNum = (((milkNum) + (clicksPerSecond - ((CatClicker.canniness - 1) * 10)) * elapsed));
+                cpsText.text = ("Milk Per Second: " + (FlxMath.roundDecimal(clicksPerSecond - (CatClicker.canniness - 1) * 10, 2)));
+            } else {
+                milkNum = (((milkNum) + (clicksPerSecond) * elapsed));
+                cpsText.text = ("Milk Per Second: " + (clicksPerSecond));
+            } 
         }
         waitBeforeCPS();
-        milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " Milk");
-        cpsText.text = ("Milk Per Second: " + (clicksPerSecond));
-        shopClicked();
+        milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " Milk"); 
+        shopClicked();        
     }
 
     static public function updateMilkText() 
@@ -117,5 +124,21 @@ class MainHud extends FlxTypedGroup<FlxSprite>
                 //trace(isShopOpened);
             }
         }
+    }
+    function inTheNegatives()
+    {
+        if(milkNum < 0)
+        {
+            milkText.color = FlxColor.RED;
+        } else {
+            milkText.color = FlxColor.WHITE;
+        }
+
+        if(clicksPerSecond - CatClicker.canniness * 10 < 0)
+        {
+            cpsText.color = FlxColor.RED;
+        } else {
+            cpsText.color = FlxColor.WHITE;
+        } 
     }
 }

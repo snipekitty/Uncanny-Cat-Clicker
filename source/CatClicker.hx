@@ -4,6 +4,7 @@ import MainHud;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxMath;
 import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -30,7 +31,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var defaultScale:Float = 0.8;
 
     var cannyMeter:FlxBar;
-    var canniness:Float = -0.5;
+    public static var canniness:Float = -0.5;
 
     public function new() 
     {
@@ -51,6 +52,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         uncannyCat.screenCenter();
         add(uncannyCat);
 
+        //move to mainhud later
         cannyMeter = new FlxBar(0, 0, BOTTOM_TO_TOP, 10, 100, 0, "Canniness", -0.5, 1, true);
         cannyMeter.createFilledBar(FlxColor.WHITE, FlxColor.BLACK, false);
         cannyMeter.scale.set(5, 5);
@@ -79,6 +81,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             canniness += 0.01;
             trace(canniness);
         }
+        canniness = FlxMath.roundDecimal(canniness, 2);
     }
 
     function clicking() 
