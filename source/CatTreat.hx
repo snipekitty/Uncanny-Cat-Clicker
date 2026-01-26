@@ -30,7 +30,8 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
     static var randomSpawnNum:Int;
 
     public static var isClicked:Bool = false;
-    var isSpawned:Bool = false;
+    public static var isSpawned:Bool = false;
+    public static var finishedGame:Bool = false;
 
     var spawnTimer:Float;
     var leaveTimer:FlxTimer;
@@ -54,7 +55,9 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
         notifText.font = "assets/fonts/Comic Sans MS.ttf";
         notifText.antialiasing = true;
         add(notifText);
-        notifText.kill(); 
+        notifText.kill();
+
+        clickSound.persist = true;
         
         multNumbers = [10, 33, 50, 100];
     }
@@ -64,6 +67,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
         super.update(elapsed);
 
         clickTreat();
+        displayNotif();
         
         if(isSpawned == false)
         {
@@ -104,7 +108,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
             multTimer += 1 * elapsed;
             trace(multTimer);
             
-            if(multTimer > 3)
+            if(multTimer > 3.1)
             {
                 multTimer = 0;
                 MainHud.clicksPerSecond = MainHud.cpsOld;
@@ -138,12 +142,9 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
                         catTreat.kill();
                         multTimer = 0;
                         MainHud.cpsOld = MainHud.clicksPerSecond;
-                        //later will be determined by how well you do in the game, just random for testing i guess
-                        randomNumber = FlxG.random.int(0, multNumbers.length - 1);
-                        MainHud.clicksPerSecond *= multNumbers[randomNumber];
+                        FlxG.switchState(MiniGameState.new);
                         clickSound.play(true);
                     }
-                    displayNotif();
                 }
             }
         }
@@ -159,15 +160,28 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
     {
         if(isClicked == true)
         {
-            notifText.text ="YOU WON " + multNumbers[randomNumber] + " x YOUR Milk PER SECOND !!!";
-            notifText.setPosition(catTreat.x, catTreat.y);
-            notifText.revive();
-            notifTimer = new FlxTimer().start(1.0, notifTimer ->{ notifText.kill(); notifTimer.destroy;});
-            /* would be formatted as a switch statement probably?
-            something like
-            if true YOU WON !!!
-            if false YOU LOST ???
-            */
+            if(finishedGame == true)
+            {
+                switch(MiniGameState.didYouWin)
+                {
+                    case true:
+                        randomPos();
+                        notifText.setPosition(randomX, randomY);
+                        notifText.revive();
+                        randomNumber = FlxG.random.int(0, multNumbers.length - 1);
+                        MainHud.clicksPerSecond *= multNumbers[randomNumber];
+                        notifText.text = "YOU WON " + multNumbers[randomNumber] + " x YOUR Milk PER SECOND !!!";
+                        notifTimer = new FlxTimer().start(1.0, notifTimer ->{ notifText.kill(); notifTimer.destroy;});
+                        finishedGame = false;
+                    case false:
+                        notifText.text = "you lost lol";
+                        randomPos();
+                        notifText.setPosition(randomX, randomY);
+                        notifText.revive();
+                        notifTimer = new FlxTimer().start(1.0, notifTimer ->{ notifText.kill(); notifTimer.destroy;});
+                        finishedGame = false;
+                }
+            }
         }
     }
 }

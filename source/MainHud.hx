@@ -87,8 +87,8 @@ class MainHud extends FlxTypedGroup<FlxSprite>
             inTheNegatives();
             if(CatClicker.canniness > 0)
             {
-                milkNum = (((milkNum) + (clicksPerSecond - ((CatClicker.canniness - 1) * 10)) * elapsed));
-                cpsText.text = ("Milk Per Second: " + (FlxMath.roundDecimal(clicksPerSecond - (CatClicker.canniness - 1) * 10, 2)));
+                milkNum = (((milkNum) + (clicksPerSecond + ((CatClicker.canniness * -1 - 1))) * elapsed));
+                cpsText.text = ("Milk Per Second: " + (FlxMath.roundDecimal(clicksPerSecond + ((CatClicker.canniness * -1 - 1)), 2)));
             } else {
                 milkNum = (((milkNum) + (clicksPerSecond) * elapsed));
                 cpsText.text = ("Milk Per Second: " + (clicksPerSecond));
@@ -134,7 +134,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
             milkText.color = FlxColor.WHITE;
         }
 
-        if(clicksPerSecond - CatClicker.canniness * 10 < 0)
+        if((clicksPerSecond + ((CatClicker.canniness * -1 - 1))) < 0)
         {
             cpsText.color = FlxColor.RED;
         } else {
