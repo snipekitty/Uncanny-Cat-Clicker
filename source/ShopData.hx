@@ -18,7 +18,7 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     static var extraShopItemTest:FlxSprite;
 
     public static var shopArray:Array<FlxSprite>;
-    public static var shopPrices:Array<Float>;
+    public static var shopPrices:Array<Float> = [10, 100];
     public static var shopDescriptions:Array<FlxText>;
     static var shopCPSSetter:Array<Float>;
 
@@ -36,8 +36,6 @@ class ShopData extends FlxTypedGroup<FlxSprite>
 
         shopArray = [extraClickTest, extraShopItemTest];
 
-        shopPrices = [10, 100];
-
         shopCPSSetter = [1, 10];
 
         // i dont really know how to format how the shop looks so todo i guess
@@ -52,6 +50,7 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         shopItemIsClicked();
         buyableState();
         scrollShop();
+        shopOpened();
 
         for (descriptions in 0...shopDescriptions.length)
         {

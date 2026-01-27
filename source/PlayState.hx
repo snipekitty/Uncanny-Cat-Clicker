@@ -11,10 +11,12 @@ class PlayState extends FlxState
 	var shopData:ShopData;
 	var catTreat:CatTreat;
 
-	var clickableObj:Array<FlxSprite>;
+	// todo, universal debug controls
 	
 	override public function create()
 	{
+		persistentUpdate = true;
+
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.bliss__png);
 
