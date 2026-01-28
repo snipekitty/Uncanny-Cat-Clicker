@@ -38,6 +38,8 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
 
     var clickSound = FlxG.sound.load(AssetPaths.squish__wav);
     var spawnSound = FlxG.sound.load(AssetPaths.ding__wav);
+    var yaySound = FlxG.sound.load(AssetPaths.yay__wav);
+    var sadTromBalone = FlxG.sound.load(AssetPaths.sadtrombone__wav);
     
     public function new()
     {
@@ -165,11 +167,13 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
                 switch(MiniGameState.didYouWin)
                 {
                     case true:
+                        
                         randomPos();
                         notifText.setPosition(randomX, randomY);
                         notifText.revive();
                         randomNumber = FlxG.random.int(0, multNumbers.length - 1);
                         MainHud.clicksPerSecond *= multNumbers[randomNumber];
+                        yaySound.play(true);
                         notifText.text = "YOU WON " + multNumbers[randomNumber] + " x YOUR Milk PER SECOND !!!";
                         notifTimer = new FlxTimer().start(1.0, notifTimer ->{ notifText.kill(); notifTimer.destroy;});
                         finishedGame = false;
@@ -178,6 +182,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
                         randomPos();
                         notifText.setPosition(randomX, randomY);
                         notifText.revive();
+                        sadTromBalone.play(true);
                         notifTimer = new FlxTimer().start(1.0, notifTimer ->{ notifText.kill(); notifTimer.destroy;});
                         finishedGame = false;
                 }

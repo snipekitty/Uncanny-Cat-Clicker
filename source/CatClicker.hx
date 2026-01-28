@@ -73,6 +73,9 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         uncannyCat.scale.y = cannyCat.scale.y;
         uncannyCat.alpha = canniness;
 
+        //canniness += 0.1;
+        trace(canniness);
+
         if(FlxG.keys.pressed.LEFT)
         {
             canniness -= 0.01;
@@ -81,7 +84,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             canniness += 0.01;
             trace(canniness);
         }
-        canniness = FlxMath.roundDecimal(canniness, 2);
+        //canniness = FlxMath.roundDecimal(canniness, 3);
     }
 
     function clicking() 

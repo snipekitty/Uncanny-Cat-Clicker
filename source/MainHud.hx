@@ -100,14 +100,6 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 
         milkText.screenCenter(X);
         cpsText.screenCenter(X);
-        
-        if(FlxG.keys.pressed.A){
-            cpsText.x -= 1;
-            trace(cpsText.x);
-        } else if(FlxG.keys.pressed.D) {
-            cpsText.x += 1;
-            trace(cpsText.x);
-        }
     }
 
     static public function updateMilkText() 
