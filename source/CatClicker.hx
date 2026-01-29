@@ -33,6 +33,11 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var cannyMeter:FlxBar;
     public static var canniness:Float = -0.5;
 
+    var randomCheck:Int;
+    var randomCheckOverTime:Int;
+    // timer for whenever canniness updates
+    var timer:FlxTimer;
+
     public function new() 
     {
         super();
@@ -53,12 +58,13 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         add(uncannyCat);
 
         //move to mainhud later
-        cannyMeter = new FlxBar(0, 0, BOTTOM_TO_TOP, 10, 100, 0, "Canniness", -0.5, 1, true);
+        cannyMeter = new FlxBar(0, 0, BOTTOM_TO_TOP, 10, 70, 0, "Canniness", -0.5, 1, true);
         cannyMeter.createFilledBar(FlxColor.WHITE, FlxColor.BLACK, false);
         cannyMeter.scale.set(5, 5);
         cannyMeter.updateHitbox();
         cannyMeter.setPosition(0, 0);
         cannyMeter.screenCenter(Y);
+        cannyMeter.y = cannyMeter.y - 20;
         add(cannyMeter);
     }
 
@@ -73,8 +79,16 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         uncannyCat.scale.y = cannyCat.scale.y;
         uncannyCat.alpha = canniness;
 
-        //canniness += 0.1;
-        trace(canniness);
+        #if debug
+        if(MainHud.clicksPerSecond > 0)
+        {
+            timer = new FlxTimer().start(1, leave ->{randomCheckOverTime = FlxG.random.int(0, 10); timer.destroy();});
+            if(randomCheckOverTime == 1)
+            {
+                canniness += 0.01 * elapsed;
+                trace(canniness);
+            }
+        }
 
         if(FlxG.keys.pressed.LEFT)
         {
@@ -84,7 +98,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             canniness += 0.01;
             trace(canniness);
         }
-        //canniness = FlxMath.roundDecimal(canniness, 3);
+        #end
     }
 
     function clicking() 
@@ -95,6 +109,9 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             if(FlxG.mouse.justReleased) 
             {
                 playCannySounds();
+                #if debug
+                uppingCanniness();
+                #end
                 FlxTween.cancelTweensOf(cannyCat);
                 MainHud.updateMilkText();
                 FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
@@ -114,5 +131,17 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 		cannySounds[randomNumber].play(true);
 		//trace(cannySounds);
 		//trace(randomNumber);
+    }
+
+    function uppingCanniness()
+    {
+        if(MainHud.clicksPerSecond > 0)
+        {
+            randomCheck = FlxG.random.int(0, 5);
+            if(randomCheck == 1)
+            {
+                canniness += 0.01;
+            }
+        }
     }
 }

@@ -27,12 +27,14 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         super();
 
         extraClickTest = new FlxSprite();
-        extraClickTest.makeGraphic(180, 120, FlxColor.WHITE);
-        extraClickTest.setPosition(FlxG.width - extraClickTest.width, 160);
+        extraClickTest.loadGraphic(AssetPaths.shopTestBG__png);
+        extraClickTest.setPosition(FlxG.width - extraClickTest.width - 10, 160);
+        extraClickTest.angle = FlxG.random.int(-10, 10);
         
         extraShopItemTest = new FlxSprite();
-        extraShopItemTest.makeGraphic(180, 120, FlxColor.WHITE);
-		extraShopItemTest.setPosition(FlxG.width - extraShopItemTest.width, extraClickTest.y + 130);
+        extraShopItemTest.loadGraphic(AssetPaths.shopTestBG__png);
+		extraShopItemTest.setPosition(FlxG.width - extraShopItemTest.width - 10, extraClickTest.y + 130);
+        extraShopItemTest.angle = FlxG.random.int(-10, 10);
 
         shopArray = [extraClickTest, extraShopItemTest];
 
