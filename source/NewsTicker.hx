@@ -40,7 +40,21 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         "https://www.youtube.com/@jamie-crazy",
         "the quote book is for… quotes that are somewhat \"outlandish\" for lack of a better term, not for normal sentences",
         "anything for +1 sb xp....",
-        "connection failed after 4 retries"];
+        "connection failed after 4 retries",
+        "if valve wont make 3, hevi wont make 9, i wont make 27, then who isnt gonna make 81?",
+        "rage tag = hit the road",
+        "I PLEDGE ALLEGIANCE TO THE GRIND",
+        "https://www.youtube.com/watch?v=GiaD7WSdb4M",
+        "admin he doin it sideways",
+        "always buy the dip",
+        "\"the cars are carrying me\"",
+        "i'm like hey what's up hello",
+        "PINK CANDY BOOOOOOM",
+        "at 100% speed, does this look possible to you?",
+        "hey buddy. we're going to kill you and leave you laid out in a dumpster to rot",
+        "yuri vs yaoi !?!?",
+        "HOW TO GURNEY IN STRAFTAT (BROKEN META) (WORKING 2026) (NOT PATCHED) (NOT CLICKBAIT)"
+        ];
 
         newsText.text = newsTextArray[FlxG.random.int(0, newsTextArray.length - 1)];
 
