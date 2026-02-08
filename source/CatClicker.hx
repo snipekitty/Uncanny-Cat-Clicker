@@ -79,17 +79,22 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         uncannyCat.scale.y = cannyCat.scale.y;
         uncannyCat.alpha = canniness;
 
-        #if debug
         if(MainHud.clicksPerSecond > 0)
         {
             timer = new FlxTimer().start(1, leave ->{randomCheckOverTime = FlxG.random.int(0, 10); timer.destroy();});
             if(randomCheckOverTime == 1)
             {
                 canniness += 0.01 * elapsed;
-                trace(canniness);
+                //trace(canniness);
             }
         }
 
+        if(canniness > 1)
+        {
+            canniness = 1;
+        }
+
+        #if debug
         if(FlxG.keys.pressed.LEFT)
         {
             canniness -= 0.01;
@@ -109,9 +114,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             if(FlxG.mouse.justReleased) 
             {
                 playCannySounds();
-                #if debug
                 uppingCanniness();
-                #end
                 FlxTween.cancelTweensOf(cannyCat);
                 MainHud.updateMilkText();
                 FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });

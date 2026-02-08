@@ -17,7 +17,7 @@ class PlayState extends FlxState
 	override public function create()
 	{
 		persistentUpdate = true;
-
+		
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.bliss__png);
 

@@ -12,6 +12,7 @@ class Main extends Sprite
 		super();
 		addChild(new FlxGame(0, 0, PlayState, 60, 60, true));
 		addChild(new FPS(10, 10, 0x000000));
+		FlxG.fixedTimestep = true;
 		FlxG.autoPause = false;
 		FlxG.mouse.useSystemCursor = true;
 	}

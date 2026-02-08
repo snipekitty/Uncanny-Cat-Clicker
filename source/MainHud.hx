@@ -9,6 +9,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 class MainHud extends FlxTypedGroup<FlxSprite>
 {
@@ -27,9 +28,6 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     public static var isShopOpened:Bool = false;
 
     var catNewsDisplayer:FlxSprite;
-
-    // 1ish second timer to delay how fast clickspersecond goes
-    static var autoClickDelay:Float = 0;
 
     public function new() 
     {
@@ -90,18 +88,16 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         super.update(elapsed);
         if (clicksPerSecond > 0)
         {
-            autoClickDelay += 1 * elapsed;
             inTheNegatives();
             if(CatClicker.canniness > 0)
             {
-                milkNum = (((milkNum) + (clicksPerSecond - (CatClicker.canniness)) * elapsed));
-                cpsText.text = ("milk per second: " + (FlxMath.roundDecimal(clicksPerSecond - (CatClicker.canniness), 2)));
+                milkNum = (((milkNum) + (clicksPerSecond / (1 + CatClicker.canniness)) * elapsed));
+                cpsText.text = ("milk per second: " + (FlxMath.roundDecimal(clicksPerSecond / (1 + CatClicker.canniness), 2)));
             } else {
                 milkNum = (((milkNum) + (clicksPerSecond) * elapsed));
                 cpsText.text = ("milk per second: " + (clicksPerSecond));
             } 
         }
-        waitBeforeCPS();
         milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " milk"); 
         shopClicked();
 
@@ -113,13 +109,6 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     {
         milkNum = ((milkNum) + (1 + (clickBonus)));
 		trace(milkNum);
-    }
-
-    static public function waitBeforeCPS()
-    {
-        if(autoClickDelay >= 1) {
-            autoClickDelay = 0;
-        }
     }
 
     function shopClicked()
@@ -143,7 +132,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
             milkText.color = FlxColor.WHITE;
         }
 
-        if((clicksPerSecond - (CatClicker.canniness)) < 0)
+        if((clicksPerSecond / (1 + CatClicker.canniness)) <= clicksPerSecond)
         {
             cpsText.color = FlxColor.RED;
         } else {
