@@ -11,13 +11,11 @@ class PlayState extends FlxState
 	var shopData:ShopData;
 	var catTreat:CatTreat;
 	var newsTicker:NewsTicker;
-
-	// todo, universal debug controls
 	
 	override public function create()
 	{
 		persistentUpdate = true;
-		
+
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.bliss__png);
 
@@ -35,11 +33,11 @@ class PlayState extends FlxState
 		var newsTicker = new NewsTicker();
 		add(newsTicker);
 
-		var catTreat = new CatTreat();
-		add(catTreat);
-
 		var mainHud = new MainHud();
 		add(mainHud);
+
+		var catTreat = new CatTreat();
+		add(catTreat);
 		
 		FlxG.cameras.bgColor = 0xffffffff;
 

@@ -3,6 +3,7 @@ package;
 import ShopData;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.addons.display.FlxExtendedMouseSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
@@ -28,6 +29,14 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     public static var isShopOpened:Bool = false;
 
     var catNewsDisplayer:FlxSprite;
+    var catFood:FlxExtendedMouseSprite;
+    var catFoodCopy:FlxSprite;
+
+    var sponge:FlxExtendedMouseSprite;
+    var spongeCopy:FlxSprite;
+
+    var sleepIcon:FlxExtendedMouseSprite;
+    var sleepCopy:FlxSprite;
 
     public function new() 
     {
@@ -61,6 +70,39 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         catNewsDisplayer.loadGraphic(AssetPaths.newstv__png);
         catNewsDisplayer.setPosition(0, FlxG.height - catNewsDisplayer.height);
 
+        catFood = new FlxExtendedMouseSprite(354, 170);
+        catFood.loadGraphic(AssetPaths.CatFood__png);
+        catFood.scale.set(0.2, 0.2);
+        catFood.updateHitbox();
+        catFood.draggable = true;
+
+        catFoodCopy = catFood.clone();
+        catFoodCopy.scale.set(0.2, 0.2);
+        catFoodCopy.setPosition(354, 170);
+        catFoodCopy.updateHitbox();
+
+        sponge = new FlxExtendedMouseSprite(346, 312);
+        sponge.loadGraphic(AssetPaths.sponge__png);
+        sponge.scale.set(0.4, 0.4);
+        sponge.updateHitbox();
+        sponge.draggable = true;
+
+        spongeCopy = sponge.clone();
+        spongeCopy.scale.set(0.4, 0.4);
+        spongeCopy.setPosition(346, 312);
+        spongeCopy.updateHitbox();
+
+        sleepIcon = new FlxExtendedMouseSprite(330, 425);
+        sleepIcon.loadGraphic(AssetPaths.sleepIcon__png);
+        sleepIcon.scale.set(0.2, 0.2);
+        sleepIcon.updateHitbox();
+        sleepIcon.draggable = true;
+
+        sleepCopy = sleepIcon.clone();
+        sleepCopy.scale.set(0.2, 0.2);
+        sleepCopy.setPosition(330, 425);
+        sleepCopy.updateHitbox();
+
         var shopArray = ShopData.shopArray;
         var shopDescriptions = ShopData.shopDescriptions;
 
@@ -81,6 +123,12 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         add(milkText);
         add(cpsText);
         add(catNewsDisplayer);
+        add(catFoodCopy);
+        add(spongeCopy);
+        add(sleepCopy);
+        add(sleepIcon);
+        add(sponge);
+        add(catFood);
     }
 
     override public function update(elapsed:Float)
@@ -101,6 +149,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " milk"); 
         shopClicked();
 
+        catFoodDragged();
         milkText.screenCenter(X);
         cpsText.screenCenter(X);
     }
@@ -123,6 +172,38 @@ class MainHud extends FlxTypedGroup<FlxSprite>
             }
         }
     }
+
+    function catFoodDragged()
+    {
+        if(catFood.isDragged == false && catFood.overlaps(CatClicker.cannyCat) == false)
+        {
+            FlxTween.cancelTweensOf(catFood);
+            FlxTween.tween(catFood, { x: 354, y: 170 }, 0.5, {ease: FlxEase.elasticOut});
+        } else if(catFood.isDragged == false && catFood.overlaps(CatClicker.cannyCat) == true)
+        {
+            catFood.x = catFoodCopy.x;
+            catFood.y = catFoodCopy.y;
+        }
+        if(sponge.isDragged == false && sponge.overlaps(CatClicker.cannyCat) == false)
+        {
+            FlxTween.cancelTweensOf(sponge);
+            FlxTween.tween(sponge, { x: 346, y: 312 }, 0.5, {ease: FlxEase.elasticOut});
+        } else if(sponge.isDragged == false && sponge.overlaps(CatClicker.cannyCat) == true)
+        {
+            sponge.x = spongeCopy.x;
+            sponge.y = spongeCopy.y;
+        }
+        if(sleepIcon.isDragged == false && sleepIcon.overlaps(CatClicker.cannyCat) == false)
+        {
+            FlxTween.cancelTweensOf(sleepIcon);
+            FlxTween.tween(sleepIcon, { x: 330, y: 425 }, 0.5, {ease: FlxEase.elasticOut});
+        } else if(sleepIcon.isDragged == false && sleepIcon.overlaps(CatClicker.cannyCat) == true)
+        {
+            sleepIcon.x = sleepCopy.x;
+            sleepIcon.y = sleepCopy.y;
+        }
+    }
+
     function inTheNegatives()
     {
         if(milkNum < 0)

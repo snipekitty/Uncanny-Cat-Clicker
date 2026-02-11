@@ -30,7 +30,7 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         newsTextArray = ["I love uncanny cat clicker!!!", //0
         "the quick brown fox might've actually not jumped over the lazy dog", //1
         "nuke the whole generation", //2
-        "I love uncanny cat golf!!!", //3
+        "Play uncanny cat golf!!!", //3
         "have you ever had to play uncanny cat clicker with your life on the line", //4
         "yall gotta see this img_4758.png", //5
         "peaks of yore player DIES after trying to climb mt everest", //6
@@ -101,6 +101,7 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         "Uncanny Cat doesn't need to hear all this, they're a highly trained professional!", //71
         "babe wake up new jamie upload", //72
         "Why am I alive? Why do you care?", //73
+        "\"to my fans, thank you for being loyal and patient, I cant finish uncanny cat clicker because there's a bee in the studio\"" //74
         ];
 
         newsText.text = newsTextArray[FlxG.random.int(0, newsTextArray.length - 1)];
