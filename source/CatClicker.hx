@@ -18,6 +18,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 {   
     public static var cannyCat:FlxSprite;
     var uncannyCat:FlxSprite;
+    public static var catHitBox:FlxSprite;
 
     var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
 	var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
@@ -56,6 +57,11 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         uncannyCat.updateHitbox();
         uncannyCat.screenCenter();
         add(uncannyCat);
+
+        catHitBox = new FlxSprite();
+        catHitBox.makeGraphic(360, 360);
+        add(catHitBox);
+        catHitBox.kill();
 
         //move to mainhud later
         cannyMeter = new FlxBar(0, 0, BOTTOM_TO_TOP, 10, 70, 0, "Canniness", -0.5, 1, true);
@@ -113,11 +119,11 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             FlxTween.tween(cannyCat, { "scale.x": defaultScale + 0.05, "scale.y": defaultScale + 0.05}, 0.1, { ease: FlxEase.linear });
             if(FlxG.mouse.justReleased) 
             {
-                playCannySounds();
-                uppingCanniness();
                 FlxTween.cancelTweensOf(cannyCat);
                 MainHud.updateMilkText();
                 FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
+                playCannySounds();
+                uppingCanniness();
             }
         } else {
             FlxTween.cancelTweensOf(cannyCat);

@@ -10,6 +10,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 
 class MainHud extends FlxTypedGroup<FlxSprite>
@@ -29,6 +30,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
     public static var isShopOpened:Bool = false;
 
     var catNewsDisplayer:FlxSprite;
+
     var catFood:FlxExtendedMouseSprite;
     var catFoodCopy:FlxSprite;
 
@@ -75,7 +77,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         catFood.scale.set(0.2, 0.2);
         catFood.updateHitbox();
         catFood.draggable = true;
-
+        
         catFoodCopy = catFood.clone();
         catFoodCopy.scale.set(0.2, 0.2);
         catFoodCopy.setPosition(354, 170);
@@ -117,15 +119,16 @@ class MainHud extends FlxTypedGroup<FlxSprite>
             add(shopDescriptions[shops]);
             shopDescriptions[shops].color = FlxColor.BLACK;
             shopDescriptions[shops].kill();
-		}
-        
+		}        
         add(shopIcon);
         add(milkText);
         add(cpsText);
         add(catNewsDisplayer);
+
         add(catFoodCopy);
         add(spongeCopy);
         add(sleepCopy);
+
         add(sleepIcon);
         add(sponge);
         add(catFood);
@@ -175,33 +178,7 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 
     function catFoodDragged()
     {
-        if(catFood.isDragged == false && catFood.overlaps(CatClicker.cannyCat) == false)
-        {
-            FlxTween.cancelTweensOf(catFood);
-            FlxTween.tween(catFood, { x: 354, y: 170 }, 0.5, {ease: FlxEase.elasticOut});
-        } else if(catFood.isDragged == false && catFood.overlaps(CatClicker.cannyCat) == true)
-        {
-            catFood.x = catFoodCopy.x;
-            catFood.y = catFoodCopy.y;
-        }
-        if(sponge.isDragged == false && sponge.overlaps(CatClicker.cannyCat) == false)
-        {
-            FlxTween.cancelTweensOf(sponge);
-            FlxTween.tween(sponge, { x: 346, y: 312 }, 0.5, {ease: FlxEase.elasticOut});
-        } else if(sponge.isDragged == false && sponge.overlaps(CatClicker.cannyCat) == true)
-        {
-            sponge.x = spongeCopy.x;
-            sponge.y = spongeCopy.y;
-        }
-        if(sleepIcon.isDragged == false && sleepIcon.overlaps(CatClicker.cannyCat) == false)
-        {
-            FlxTween.cancelTweensOf(sleepIcon);
-            FlxTween.tween(sleepIcon, { x: 330, y: 425 }, 0.5, {ease: FlxEase.elasticOut});
-        } else if(sleepIcon.isDragged == false && sleepIcon.overlaps(CatClicker.cannyCat) == true)
-        {
-            sleepIcon.x = sleepCopy.x;
-            sleepIcon.y = sleepCopy.y;
-        }
+        //check if youre touching the cat food and while you are at it put it in a group
     }
 
     function inTheNegatives()
