@@ -11,6 +11,7 @@ class PlayState extends FlxState
 	var shopData:ShopData;
 	var catTreat:CatTreat;
 	var newsTicker:NewsTicker;
+	var values:Values;
 	
 	override public function create()
 	{
@@ -22,6 +23,9 @@ class PlayState extends FlxState
 		background.scale.set(3, 3);
 		background.y = background.y + 50;
 		
+		var values = new Values();
+		add(values);
+
 		add(background);
 
 		var catClicker = new CatClicker();

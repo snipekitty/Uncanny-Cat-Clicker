@@ -9,6 +9,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
@@ -17,11 +18,8 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 {
     // hud for the the milk counter
     static var milkText:FlxText;
-    public static var milkNum:Float = 0;
 
-    public static var clickBonus:Float = 0;
-    public static var clicksPerSecond:Float = 0;
-    public static var cpsOld:Float = 0;
+
     public static var cpsText:FlxText;
 
     public static var shopIcon:FlxSprite;
@@ -31,14 +29,8 @@ class MainHud extends FlxTypedGroup<FlxSprite>
 
     var catNewsDisplayer:FlxSprite;
 
-    var catFood:FlxExtendedMouseSprite;
-    var catFoodCopy:FlxSprite;
+    var cannyMeter:FlxBar;
 
-    var sponge:FlxExtendedMouseSprite;
-    var spongeCopy:FlxSprite;
-
-    var sleepIcon:FlxExtendedMouseSprite;
-    var sleepCopy:FlxSprite;
 
     public function new() 
     {
@@ -72,38 +64,14 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         catNewsDisplayer.loadGraphic(AssetPaths.newstv__png);
         catNewsDisplayer.setPosition(0, FlxG.height - catNewsDisplayer.height);
 
-        catFood = new FlxExtendedMouseSprite(354, 170);
-        catFood.loadGraphic(AssetPaths.CatFood__png);
-        catFood.scale.set(0.2, 0.2);
-        catFood.updateHitbox();
-        catFood.draggable = true;
-        
-        catFoodCopy = catFood.clone();
-        catFoodCopy.scale.set(0.2, 0.2);
-        catFoodCopy.setPosition(354, 170);
-        catFoodCopy.updateHitbox();
-
-        sponge = new FlxExtendedMouseSprite(346, 312);
-        sponge.loadGraphic(AssetPaths.sponge__png);
-        sponge.scale.set(0.4, 0.4);
-        sponge.updateHitbox();
-        sponge.draggable = true;
-
-        spongeCopy = sponge.clone();
-        spongeCopy.scale.set(0.4, 0.4);
-        spongeCopy.setPosition(346, 312);
-        spongeCopy.updateHitbox();
-
-        sleepIcon = new FlxExtendedMouseSprite(330, 425);
-        sleepIcon.loadGraphic(AssetPaths.sleepIcon__png);
-        sleepIcon.scale.set(0.2, 0.2);
-        sleepIcon.updateHitbox();
-        sleepIcon.draggable = true;
-
-        sleepCopy = sleepIcon.clone();
-        sleepCopy.scale.set(0.2, 0.2);
-        sleepCopy.setPosition(330, 425);
-        sleepCopy.updateHitbox();
+        cannyMeter = new FlxBar(0, 0, BOTTOM_TO_TOP, 10, 70, 0, "Canniness", -0.5, 1, true);
+        cannyMeter.createFilledBar(FlxColor.WHITE, FlxColor.BLACK, false);
+        cannyMeter.scale.set(5, 5);
+        cannyMeter.updateHitbox();
+        cannyMeter.setPosition(0, 0);
+        cannyMeter.screenCenter(Y);
+        cannyMeter.y = cannyMeter.y - 20;
+        add(cannyMeter);
 
         var shopArray = ShopData.shopArray;
         var shopDescriptions = ShopData.shopDescriptions;
@@ -124,44 +92,27 @@ class MainHud extends FlxTypedGroup<FlxSprite>
         add(milkText);
         add(cpsText);
         add(catNewsDisplayer);
-
-        add(catFoodCopy);
-        add(spongeCopy);
-        add(sleepCopy);
-
-        add(sleepIcon);
-        add(sponge);
-        add(catFood);
     }
 
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
-        if (clicksPerSecond > 0)
+        if (Values.clicksPerSecond > 0)
         {
             inTheNegatives();
-            if(CatClicker.canniness > 0)
-            {
-                milkNum = (((milkNum) + (clicksPerSecond / (1 + CatClicker.canniness)) * elapsed));
-                cpsText.text = ("milk per second: " + (FlxMath.roundDecimal(clicksPerSecond / (1 + CatClicker.canniness), 2)));
-            } else {
-                milkNum = (((milkNum) + (clicksPerSecond) * elapsed));
-                cpsText.text = ("milk per second: " + (clicksPerSecond));
-            } 
+
         }
-        milkText.text = (FlxMath.roundDecimal(milkNum, 0) + " milk"); 
+        milkText.text = (FlxMath.roundDecimal(Values.milkNum, 0) + " milk"); 
         shopClicked();
 
-        catFoodDragged();
         milkText.screenCenter(X);
         cpsText.screenCenter(X);
+
+        cannyMeter.value = CatClicker.canniness;
+
     }
 
-    static public function updateMilkText() 
-    {
-        milkNum = ((milkNum) + (1 + (clickBonus)));
-		trace(milkNum);
-    }
+
 
     function shopClicked()
     {
@@ -171,26 +122,20 @@ class MainHud extends FlxTypedGroup<FlxSprite>
             {
                 isShopOpened = !isShopOpened;
                 FlxTween.cancelTweensOf(shopIcon);
-                //trace(isShopOpened);
             }
         }
     }
 
-    function catFoodDragged()
-    {
-        //check if youre touching the cat food and while you are at it put it in a group
-    }
-
     function inTheNegatives()
     {
-        if(milkNum < 0)
+        if(Values.milkNum < 0)
         {
             milkText.color = FlxColor.RED;
         } else {
             milkText.color = FlxColor.WHITE;
         }
 
-        if((clicksPerSecond / (1 + CatClicker.canniness)) <= clicksPerSecond)
+        if((Values.clicksPerSecond / (1 + CatClicker.canniness)) <= Values.clicksPerSecond)
         {
             cpsText.color = FlxColor.RED;
         } else {

@@ -113,7 +113,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
             if(multTimer > 3.1)
             {
                 multTimer = 0;
-                MainHud.clicksPerSecond = MainHud.cpsOld;
+                Values.clicksPerSecond = Values.cpsOld;
                 isClicked = false;
                 isSpawned = false;
             }
@@ -143,7 +143,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
                         leaveTimer.destroy();
                         catTreat.kill();
                         multTimer = 0;
-                        MainHud.cpsOld = MainHud.clicksPerSecond;
+                        Values.cpsOld = Values.clicksPerSecond;
                         FlxG.switchState(MiniGameState.new);
                         clickSound.play(true);
                     }
@@ -172,7 +172,7 @@ class CatTreat extends FlxTypedGroup<FlxSprite>
                         notifText.setPosition(randomX, randomY);
                         notifText.revive();
                         randomNumber = FlxG.random.int(0, multNumbers.length - 1);
-                        MainHud.clicksPerSecond *= multNumbers[randomNumber];
+                        Values.clicksPerSecond *= multNumbers[randomNumber];
                         yaySound.play(true);
                         notifText.text = "YOU WON " + multNumbers[randomNumber] + " x YOUR Milk PER SECOND !!!";
                         notifTimer = new FlxTimer().start(1.0, notifTimer ->{ notifText.kill(); notifTimer.destroy;});

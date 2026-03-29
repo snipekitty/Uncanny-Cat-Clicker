@@ -101,7 +101,8 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         "Uncanny Cat doesn't need to hear all this, they're a highly trained professional!", //71
         "babe wake up new jamie upload", //72
         "Why am I alive? Why do you care?", //73
-        "\"to my fans, thank you for being loyal and patient, I cant finish uncanny cat clicker because there's a bee in the studio\"" //74
+        "\"to my fans, thank you for being loyal and patient, I cant finish uncanny cat clicker because there's a bee in the studio\"", //74
+        "if you see this newsticker it means something has gone horribly wrong, a fix is on my website https://www.brintendo.com/", //75
         ];
 
         newsText.text = newsTextArray[FlxG.random.int(0, newsTextArray.length - 1)];

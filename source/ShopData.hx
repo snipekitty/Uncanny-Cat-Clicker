@@ -91,21 +91,21 @@ class ShopData extends FlxTypedGroup<FlxSprite>
         {
             if(shopArray[0].alive == true)
             {
-                if(MainHud.milkNum >= shopPrices[0])
+                if(Values.milkNum >= shopPrices[0])
                 {
                     if(FlxG.mouse.overlaps(shopArray[0]))
                     {
                         if(FlxG.mouse.justReleased)
                         {
-                            MainHud.milkNum = MainHud.milkNum - shopPrices[0];
+                            Values.milkNum = Values.milkNum - shopPrices[0];
                             shopPrices[0] = FlxMath.roundDecimal(shopPrices[0] * 1.15, 0);
                             shopDescriptions[0].text = "Price: " + shopPrices[0];
-                            MainHud.cpsOld += shopCPSSetter[0];
-                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[0];
+                            Values.cpsOld += shopCPSSetter[0];
+                            Values.clicksPerSecond = Values.clicksPerSecond + shopCPSSetter[0];
                             switch (CatTreat.isClicked)
                             {
                                 case true:
-                                    MainHud.clicksPerSecond = MainHud.cpsOld * CatTreat.multNumbers[CatTreat.randomNumber];
+                                    Values.clicksPerSecond = Values.cpsOld * CatTreat.multNumbers[CatTreat.randomNumber];
                                 case false:
                                     //do nothing
                             }
@@ -113,21 +113,21 @@ class ShopData extends FlxTypedGroup<FlxSprite>
                     }   
                 }
 
-                if(MainHud.milkNum >= shopPrices[1])
+                if(Values.milkNum >= shopPrices[1])
                 {
                     if(FlxG.mouse.overlaps(shopArray[1]))
                     {
                         if(FlxG.mouse.justReleased)
                         {
-                            MainHud.milkNum = MainHud.milkNum - shopPrices[1]; 
+                            Values.milkNum = Values.milkNum - shopPrices[1]; 
                             shopPrices[1] = FlxMath.roundDecimal(shopPrices[1] * 1.15, 0);
                             shopDescriptions[1].text = "Price: " + shopPrices[1];
-                            MainHud.cpsOld += shopCPSSetter[0];
-                            MainHud.clicksPerSecond = MainHud.clicksPerSecond + shopCPSSetter[1];
+                            Values.cpsOld += shopCPSSetter[0];
+                            Values.clicksPerSecond = Values.clicksPerSecond + shopCPSSetter[1];
                             switch (CatTreat.isClicked)
                             {
                                 case true:
-                                    MainHud.clicksPerSecond = MainHud.cpsOld * CatTreat.multNumbers[CatTreat.randomNumber];
+                                    Values.clicksPerSecond = Values.cpsOld * CatTreat.multNumbers[CatTreat.randomNumber];
                                 case false:
                                     //do nothing
                             }
@@ -142,10 +142,10 @@ class ShopData extends FlxTypedGroup<FlxSprite>
     {
         for (prices in 0...shopPrices.length)
         {
-            if(MainHud.milkNum < shopPrices[prices])
+            if(Values.milkNum < shopPrices[prices])
             {
                 shopArray[prices].alpha = 0.5;
-            } else if(MainHud.milkNum >= shopPrices[prices]) {
+            } else if(Values.milkNum >= shopPrices[prices]) {
                 shopArray[prices].alpha = 1;
             }
         }
