@@ -10,11 +10,6 @@ class Values extends FlxBasic
     public static var clickBonus:Float = 0;
     public static var cpsOld:Float = 0;
 
-    public function new()
-    {
-        super();
-    }
-
     override public function update(elapsed:Float) 
     {
         super.update(elapsed);

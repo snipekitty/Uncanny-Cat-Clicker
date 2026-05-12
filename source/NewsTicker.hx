@@ -21,8 +21,8 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         newsBar.setPosition(0, FlxG.height - newsBar.height);
 
         newsText = new FlxText(0, 0, 0, "nothing", 25);
-        newsText.setPosition(1400, FlxG.height - newsText.height);
-        newsText.font = "assets/fonts/Comic Sans MS.ttf";
+        newsText.setPosition(1400, FlxG.height - newsText.height + 3);
+        newsText.font = "assets/fonts/impact.ttf";
         newsText.antialiasing = true;
         newsText.pixelPerfectPosition = true;
         newsText.pixelPerfectRender = true;
@@ -103,6 +103,18 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         "Why am I alive? Why do you care?", //73
         "\"to my fans, thank you for being loyal and patient, I cant finish uncanny cat clicker because there's a bee in the studio\"", //74
         "if you see this newsticker it means something has gone horribly wrong, a fix is on my website https://www.brintendo.com/", //75
+        "Giant dog refused to leave dollar store", //76
+        "gangsta in the streets, femboy in the sheets", //77
+        "*nyaw* overdoses", //78
+        "stay in school or this could be you!", //79
+        "umm... so this means uhh... umm...", //80 include gif
+        "mad? watch this dunk", //81 include gif
+        "spread kindess and positivity", //82 include gif
+        "spread EVIL and NEGATIVITY", //83 include gif
+        "lalala i cant hear you over this trumpet", //84 include gif
+        "we're busy", //85
+        "pls god strike this individual down", //86
+        "sure hope my egg doesnt crack!", //87
         ];
 
         newsText.text = newsTextArray[FlxG.random.int(0, newsTextArray.length - 1)];

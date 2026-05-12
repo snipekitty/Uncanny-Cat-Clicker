@@ -9,6 +9,7 @@ import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 import openfl.display.BlendMode;
 
@@ -27,14 +28,12 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var clickText:FlxText;
     var clickTextTimer:FlxTimer;
 
-    var defaultScale:Float = 0.8;
+    var defaultScale:Float = 0.4;
+
+    var randomX:Float;
+    var randomY:Float;
 
     public static var canniness:Float = -0.5;
-
-    var randomCheck:Int;
-    var randomCheckOverTime:Int;
-    // timer for whenever canniness updates
-    var timer:FlxTimer;
 
     public function new() 
     {
@@ -42,7 +41,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 
         cannyCat = new FlxSprite();
         cannyCat.loadGraphic(AssetPaths.CannyCat__png);
-        cannyCat.scale.set(0.8, 0.8);
+        cannyCat.scale.set(defaultScale, defaultScale);
         cannyCat.updateHitbox();
         cannyCat.screenCenter();
         //cannyCat.blend = BlendMode.MULTIPLY;
@@ -50,34 +49,21 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 
         uncannyCat = new FlxSprite();
         uncannyCat.loadGraphic(AssetPaths.UncannyCat__png);
-        uncannyCat.scale.set(0.8, 0.8);
+        uncannyCat.scale.set(defaultScale, defaultScale);
         uncannyCat.updateHitbox();
         uncannyCat.screenCenter();
         add(uncannyCat);
-
-        catHitBox = new FlxSprite();
-        catHitBox.makeGraphic(360, 360);
-        add(catHitBox);
-        catHitBox.kill();
-
-        //move to mainhud later
-
     }
 
     override public function update(elapsed:Float) 
     {
         super.update(elapsed);
-        clicking();
-        passiveCanniness(elapsed);
+        //clicking();
+        lerpmovement();
 
         uncannyCat.scale.x = cannyCat.scale.x;
         uncannyCat.scale.y = cannyCat.scale.y;
         uncannyCat.alpha = canniness;
-
-        if(canniness > 1)
-        {
-            canniness = 1;
-        }
 
         #if debug
         if(FlxG.keys.pressed.LEFT)
@@ -102,12 +88,22 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
                 Values.updateMilkText();
                 FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
                 playCannySounds();
-                clickCanniness();
             }
         } else {
             FlxTween.cancelTweensOf(cannyCat);
             FlxTween.tween(cannyCat, { "scale.x": defaultScale, "scale.y": defaultScale}, 0.1, { ease: FlxEase.linear });
         }
+    }
+
+    function lerpmovement()
+    {
+        if(FlxG.keys.justReleased.S)
+        {
+            randomX = FlxG.random.float(0, 1280);
+            randomY = FlxG.random.float(0, 720);
+        }
+        cannyCat.x = FlxMath.lerp(cannyCat.x, randomX, 0.01);
+        cannyCat.y = FlxMath.lerp(cannyCat.y, randomY, 0.01);
     }
 
     function playCannySounds()
@@ -121,28 +117,8 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 		//trace(randomNumber);
     }
 
-    function clickCanniness()
+    function incrCanniness()
     {
-        if(Values.clicksPerSecond > 0)
-        {
-            randomCheck = FlxG.random.int(0, 5);
-            if(randomCheck == 1)
-            {
-                canniness += 0.01;
-            }
-        }
-    }
-
-    function passiveCanniness(elapsed:Float)
-    {
-        if(Values.clicksPerSecond > 0)
-        {
-            timer = new FlxTimer().start(1, leave ->{randomCheckOverTime = FlxG.random.int(0, 10); timer.destroy();});
-            if(randomCheckOverTime == 1)
-            {
-                canniness += 0.01 * elapsed;
-                trace(canniness);
-            }
-        }
+        
     }
 }
