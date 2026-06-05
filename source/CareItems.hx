@@ -1,17 +1,22 @@
 package;
 
+import flixel.FlxBasic;
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxExtendedMouseSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
+import flixel.input.FlxPointer;
+import flixel.math.FlxPoint;
 
-class TakecareItems extends FlxTypedGroup<FlxSprite>
+class CareItems extends FlxTypedGroup<FlxSprite>
 {
     var catFood:FlxExtendedMouseSprite;
     var catSleep:FlxExtendedMouseSprite;
     var catSponge:FlxExtendedMouseSprite;
 
-    var itemsGroup:FlxTypedGroup<FlxSprite>;
+    var itemsGroup:Array<FlxSprite>;
+    var defaultPositions:Array<FlxPoint>;
 
     public function new()
     {
@@ -34,18 +39,33 @@ class TakecareItems extends FlxTypedGroup<FlxSprite>
         catSponge.updateHitbox();
         catSponge.draggable = true;
 
-        itemsGroup = new FlxTypedGroup();
-        itemsGroup.add(catFood);
-        itemsGroup.add(catSleep);
-        itemsGroup.add(catSponge);
+        itemsGroup = [catFood, catSleep, catSponge];
+        defaultPositions = [FlxPoint.weak(354, 170), FlxPoint.weak(330, 425), FlxPoint.weak(346, 312)];
 
-        add(catFood);
-        add(catSleep);
-        add(catSponge);
+        for(items in 0...itemsGroup.length)
+        {
+            add(itemsGroup[items]);
+        }
+
+        
     }
 
     override public function update(elapsed:Float)
     {
         super.update(elapsed);
+        defaultPos();
+    }
+
+    function defaultPos()
+    {
+        for(items in 0...itemsGroup.length)
+        {
+            if(itemsGroup[items].getPosition() == defaultPositions[items])
+            {
+                trace("they are in correct positions");
+            } else {
+                trace("they are not");
+            }
+        }
     }
 }

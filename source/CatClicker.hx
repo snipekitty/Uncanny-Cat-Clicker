@@ -28,10 +28,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var clickText:FlxText;
     var clickTextTimer:FlxTimer;
 
-    var defaultScale:Float = 0.4;
-
-    var randomX:Float;
-    var randomY:Float;
+    var defaultScale:Float = 0.8;
 
     public static var canniness:Float = -0.5;
 
@@ -44,6 +41,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         cannyCat.scale.set(defaultScale, defaultScale);
         cannyCat.updateHitbox();
         cannyCat.screenCenter();
+        cannyCat.antialiasing = true;
         //cannyCat.blend = BlendMode.MULTIPLY;
         add(cannyCat);
 
@@ -58,8 +56,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     override public function update(elapsed:Float) 
     {
         super.update(elapsed);
-        //clicking();
-        lerpmovement();
+        clicking();
 
         uncannyCat.scale.x = cannyCat.scale.x;
         uncannyCat.scale.y = cannyCat.scale.y;
@@ -81,29 +78,21 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     {
         if(FlxG.mouse.overlaps(cannyCat))
         {
-            FlxTween.tween(cannyCat, { "scale.x": defaultScale + 0.05, "scale.y": defaultScale + 0.05}, 0.1, { ease: FlxEase.linear });
+            cannyCat.scale.x = FlxMath.lerp(cannyCat.scale.x, defaultScale + 0.1, 0.1);
+            cannyCat.scale.y = FlxMath.lerp(cannyCat.scale.y, defaultScale + 0.1, 0.1);
             if(FlxG.mouse.justReleased) 
             {
-                FlxTween.cancelTweensOf(cannyCat);
+                //FlxTween.cancelTweensOf(cannyCat);
                 Values.updateMilkText();
-                FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
+                //FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
+                cannyCat.scale.x = FlxMath.lerp(defaultScale, cannyCat.scale.x - 0.1, 0.1);
+                cannyCat.scale.y = FlxMath.lerp(defaultScale, cannyCat.scale.y - 0.1, 0.1);
                 playCannySounds();
             }
         } else {
-            FlxTween.cancelTweensOf(cannyCat);
-            FlxTween.tween(cannyCat, { "scale.x": defaultScale, "scale.y": defaultScale}, 0.1, { ease: FlxEase.linear });
+            cannyCat.scale.x = FlxMath.lerp(cannyCat.scale.x, defaultScale, 0.1);
+            cannyCat.scale.y = FlxMath.lerp(cannyCat.scale.y, defaultScale, 0.1);
         }
-    }
-
-    function lerpmovement()
-    {
-        if(FlxG.keys.justReleased.S)
-        {
-            randomX = FlxG.random.float(0, 1280);
-            randomY = FlxG.random.float(0, 720);
-        }
-        cannyCat.x = FlxMath.lerp(cannyCat.x, randomX, 0.01);
-        cannyCat.y = FlxMath.lerp(cannyCat.y, randomY, 0.01);
     }
 
     function playCannySounds()

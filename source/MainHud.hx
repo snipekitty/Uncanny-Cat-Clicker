@@ -31,7 +31,7 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 
 	var cannyMeter:FlxBar;
 
-	var takecareItems:TakecareItems;
+	var careItems:CareItems;
 
 	public function new()
 	{
@@ -73,8 +73,8 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 		cannyMeter.screenCenter(Y);
 		cannyMeter.y = cannyMeter.y - 20;
 
-		//takecareItems = new TakecareItems();
-		//add(takecareItems);
+		careItems = new CareItems();
+		add(careItems);
 
 		var shopArray = ShopData.shopArray;
 		var shopDescriptions = ShopData.shopDescriptions;
