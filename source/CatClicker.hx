@@ -11,6 +11,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
+import haxe.Log;
 import openfl.display.BlendMode;
 import openfl.display.FPS;
 
@@ -31,6 +32,13 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 
     var defaultScale:Float = 0.8;
     var concurrentFPS:FPS;
+
+    var timer:FlxTimer;
+    var thoughtBubble:FlxSprite;
+
+    var hunger:Float;
+    var cleanliness:Float;
+    var sleepiness:Float;
 
     public static var canniness:Float = -0.5;
 
@@ -55,12 +63,19 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         uncannyCat.updateHitbox();
         uncannyCat.screenCenter();
         add(uncannyCat);
+
+        thoughtBubble = new FlxSprite(800, 215);
+        thoughtBubble.loadGraphic(AssetPaths.ThoughtBubble__png);
+        thoughtBubble.updateHitbox;
+        add(thoughtBubble);
+        thoughtBubble.kill();
     }
 
     override public function update(elapsed:Float) 
     {
         super.update(elapsed);
         clicking();
+        incrCanniness();
 
         uncannyCat.scale.x = cannyCat.scale.x;
         uncannyCat.scale.y = cannyCat.scale.y;
@@ -69,10 +84,10 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         #if debug
         if(FlxG.keys.pressed.LEFT)
         {
-            canniness -= 0.01;
+            canniness -= 1 * elapsed;
             trace(canniness);
         } else if(FlxG.keys.pressed.RIGHT){
-            canniness += 0.01;
+            canniness += 1 * elapsed;
             trace(canniness);
         }
         #end
@@ -112,6 +127,28 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 
     function incrCanniness()
     {
-        
+        if(Values.clicksPerSecond > 0)
+        {
+            if(FlxG.random.bool(1 + Values.clicksPerSecond/2000))
+            {
+                canniness += (0.1) * FlxG.elapsed;
+                trace("increase");
+            } else {
+                //it'll do nothing 
+                //trace("failed");
+            }
+
+            if(FlxG.mouse.overlaps(cannyCat))
+            {
+                if(FlxG.mouse.justReleased)
+                {
+                    if(FlxG.random.bool(1))
+                    {
+                        canniness += 0.01;
+                        trace("increase(clicked)");
+                    }
+                }
+            }
+        } 
     }
 }

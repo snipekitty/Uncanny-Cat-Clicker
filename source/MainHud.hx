@@ -118,7 +118,6 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 			if (FlxG.mouse.justReleased)
 			{
 				isShopOpened = !isShopOpened;
-				FlxTween.cancelTweensOf(shopIcon);
 			}
 		}
 	}

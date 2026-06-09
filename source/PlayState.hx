@@ -13,6 +13,8 @@ class PlayState extends FlxState
 	var catTreat:CatTreat;
 	var newsTicker:NewsTicker;
 	var values:Values;
+
+	var nighttime:Bool = false;
 	
 	override public function create()
 	{
@@ -44,7 +46,7 @@ class PlayState extends FlxState
 		var catTreat = new CatTreat();
 		add(catTreat);
 		
-		FlxG.cameras.bgColor = 0xffffffff;
+		FlxG.cameras.bgColor = 0xff000000;
 
 		super.create();
 	}
