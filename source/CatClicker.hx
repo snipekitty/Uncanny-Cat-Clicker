@@ -30,7 +30,6 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var clickTextTimer:FlxTimer;
 
     var defaultScale:Float = 0.8;
-
     var concurrentFPS:FPS;
 
     public static var canniness:Float = -0.5;

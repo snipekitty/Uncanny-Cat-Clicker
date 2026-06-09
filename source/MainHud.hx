@@ -27,10 +27,9 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 	public static var shopBackground:FlxSprite;
 	public static var isShopOpened:Bool = false;
 
-	var catNewsDisplayer:FlxSprite;
-
 	var cannyMeter:FlxBar;
 
+	var catNewsDisplayer:CatNewsDisplayer;
 	var careItems:CareItems;
 
 	public function new()
@@ -61,10 +60,6 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 		shopBackground.loadGraphic(AssetPaths.shopBackground__png);
 		shopBackground.setPosition(FlxG.width - shopBackground.width);
 
-		catNewsDisplayer = new FlxSprite();
-		catNewsDisplayer.loadGraphic(AssetPaths.newstv__png);
-		catNewsDisplayer.setPosition(0, FlxG.height - catNewsDisplayer.height);
-
 		cannyMeter = new FlxBar(0, 0, BOTTOM_TO_TOP, 10, 70, 0, "Canniness", -0.5, 1, true);
 		cannyMeter.createFilledBar(FlxColor.WHITE, FlxColor.BLACK, false);
 		cannyMeter.scale.set(5, 5);
@@ -73,7 +68,10 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 		cannyMeter.screenCenter(Y);
 		cannyMeter.y = cannyMeter.y - 20;
 
+
+		catNewsDisplayer = new CatNewsDisplayer();
 		careItems = new CareItems();
+		add(catNewsDisplayer);
 		add(careItems);
 
 		var shopArray = ShopData.shopArray;
@@ -94,7 +92,6 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 		add(shopIcon);
 		add(milkText);
 		add(cpsText);
-		add(catNewsDisplayer);
 		add(cannyMeter);
 	}
 

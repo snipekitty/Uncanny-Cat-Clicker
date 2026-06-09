@@ -90,7 +90,7 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         "yeah i can code: ", //58
         "oral dave at the coral cave", //59
         "the thought of wingstop is better than wingstop", //60
-        "The game \"Canny Cat Clicker\" by pistol has now completed development", //61
+        "The game \"Canny Cat Clicker\" by miss has now completed development", //61
         "\"Once, my dad told me: Respect everyone but fear no one, except for Herobrine\" - Kendrick  Lamar", //62
         "our BRAINS are GONE", //63
         "how it feels to stop listening to people and just kill them", //64
@@ -117,6 +117,17 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         "we're busy", //85
         "pls god strike this individual down", //86
         "sure hope my egg doesnt crack!", //87
+        "mythical miracle spiritual lyrical genius", //88
+        "im gay can you help me out", //89
+        "Last thing you see before getting slimed in Russia", //90
+        "i can fix her...", //91
+        "(ow ow my foot ow)", //92
+        "Look at that girl's hair, and how she's dressed. So disrespectful. Where are her parents? What a delinquent. No lady should ever behave this way.", //93
+        "you offer to the shrine but gain nothing.", //94 special
+        "A man named Moneymaker and a man named Gamble walked into a casino. Do you think they were feeling lucky?", //95
+        "tell me how much a milk cost", //96
+        "In this game, you have to produce as many cookies- Sorry, wrong game. In this game, you have to produce as many papercl- Sorry, wrong game. In this game, you have to produce as much antimat- Sorry, wrong game.", //97
+        "Sources say the cat god will come and purify which is impure.", //98
         ];
 
         newsText.text = newsTextArray[FlxG.random.int(0, newsTextArray.length - 1)];
