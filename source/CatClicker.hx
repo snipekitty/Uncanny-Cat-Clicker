@@ -12,6 +12,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxSignal;
 import flixel.util.FlxTimer;
 import openfl.display.BlendMode;
+import openfl.display.FPS;
 
 class CatClicker extends FlxTypedGroup<FlxSprite>
 {   
@@ -30,6 +31,8 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 
     var defaultScale:Float = 0.8;
 
+    var concurrentFPS:FPS;
+
     public static var canniness:Float = -0.5;
 
     public function new() 
@@ -44,6 +47,8 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         cannyCat.antialiasing = true;
         //cannyCat.blend = BlendMode.MULTIPLY;
         add(cannyCat);
+
+        concurrentFPS = new FPS(5000, 5000);
 
         uncannyCat = new FlxSprite();
         uncannyCat.loadGraphic(AssetPaths.UncannyCat__png);
@@ -78,20 +83,20 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     {
         if(FlxG.mouse.overlaps(cannyCat))
         {
-            cannyCat.scale.x = FlxMath.lerp(cannyCat.scale.x, defaultScale + 0.1, 0.1);
-            cannyCat.scale.y = FlxMath.lerp(cannyCat.scale.y, defaultScale + 0.1, 0.1);
+            cannyCat.scale.x = FlxMath.lerp(cannyCat.scale.x, defaultScale + 0.1, 1 - Math.pow(0.005, FlxG.elapsed));
+            cannyCat.scale.y = FlxMath.lerp(cannyCat.scale.y, defaultScale + 0.1, 1 - Math.pow(0.005, FlxG.elapsed));
             if(FlxG.mouse.justReleased) 
             {
                 //FlxTween.cancelTweensOf(cannyCat);
                 Values.updateMilkText();
                 //FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
-                cannyCat.scale.x = FlxMath.lerp(defaultScale, cannyCat.scale.x - 0.1, 0.1);
-                cannyCat.scale.y = FlxMath.lerp(defaultScale, cannyCat.scale.y - 0.1, 0.1);
+                cannyCat.scale.x = FlxMath.lerp(defaultScale, cannyCat.scale.x - 0.1, 1 - Math.pow(0.005, FlxG.elapsed));
+                cannyCat.scale.y = FlxMath.lerp(defaultScale, cannyCat.scale.y - 0.1, 1 - Math.pow(0.005, FlxG.elapsed));
                 playCannySounds();
             }
         } else {
-            cannyCat.scale.x = FlxMath.lerp(cannyCat.scale.x, defaultScale, 0.1);
-            cannyCat.scale.y = FlxMath.lerp(cannyCat.scale.y, defaultScale, 0.1);
+            cannyCat.scale.x = FlxMath.lerp(cannyCat.scale.x, defaultScale, 1 - Math.pow(0.005, FlxG.elapsed));
+            cannyCat.scale.y = FlxMath.lerp(cannyCat.scale.y, defaultScale, 1 - Math.pow(0.005, FlxG.elapsed));
         }
     }
 

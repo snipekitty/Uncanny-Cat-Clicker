@@ -24,8 +24,10 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         newsText.setPosition(1400, FlxG.height - newsText.height + 3);
         newsText.font = "assets/fonts/impact.ttf";
         newsText.antialiasing = true;
-        newsText.pixelPerfectPosition = true;
+        newsText.pixelPerfectPosition = false;
         newsText.pixelPerfectRender = true;
+        newsText.moves = true;
+        newsText.velocity.set(-200, 0);
 
         newsTextArray = ["I love uncanny cat clicker!!!", //0
         "the quick brown fox might've actually not jumped over the lazy dog", //1
@@ -126,7 +128,6 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
 
     override public function update(elapsed:Float)
     {
-        newsText.x -= 3;
         //trace(elapsed);
         //trace(newsText.x);
 

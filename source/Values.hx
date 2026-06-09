@@ -6,7 +6,7 @@ import flixel.math.FlxMath;
 class Values extends FlxBasic
 {
     public static var milkNum:Float = 0;
-    public static var clicksPerSecond:Float = 0;
+    public static var clicksPerSecond:Float = 999999;
     public static var clickBonus:Float = 0;
     public static var cpsOld:Float = 0;
 

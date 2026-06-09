@@ -7,6 +7,7 @@ import flixel.addons.display.FlxExtendedMouseSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxGroup;
 import flixel.input.FlxPointer;
+import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 
 class CareItems extends FlxTypedGroup<FlxSprite>
@@ -16,7 +17,7 @@ class CareItems extends FlxTypedGroup<FlxSprite>
     var catSponge:FlxExtendedMouseSprite;
 
     var itemsGroup:Array<FlxSprite>;
-    var defaultPositions:Array<FlxPoint>;
+    var defaultPositions:Array<String>;
 
     public function new()
     {
@@ -40,7 +41,7 @@ class CareItems extends FlxTypedGroup<FlxSprite>
         catSponge.draggable = true;
 
         itemsGroup = [catFood, catSleep, catSponge];
-        defaultPositions = [FlxPoint.weak(354, 170), FlxPoint.weak(330, 425), FlxPoint.weak(346, 312)];
+        defaultPositions = ["(x: 354 | y: 170)", "(x: 330 | y: 425)", "(x: 346 | y: 312)"];
 
         for(items in 0...itemsGroup.length)
         {
@@ -60,11 +61,16 @@ class CareItems extends FlxTypedGroup<FlxSprite>
     {
         for(items in 0...itemsGroup.length)
         {
-            if(itemsGroup[items].getPosition() == defaultPositions[items])
+            if(Std.string(itemsGroup[items].getPosition()) == defaultPositions[items])
             {
-                trace("they are in correct positions");
+
             } else {
-                trace("they are not");
+                if(FlxG.mouse.pressed == false)
+                {
+                    itemsGroup[0].setPosition(FlxMath.lerp(itemsGroup[0].x, 354, 0.1), FlxMath.lerp(itemsGroup[0].y, 170, 1 - Math.pow(0.01, FlxG.elapsed)));
+                    itemsGroup[1].setPosition(FlxMath.lerp(itemsGroup[1].x, 330, 0.1), FlxMath.lerp(itemsGroup[1].y, 425, 1 - Math.pow(0.01, FlxG.elapsed)));
+                    itemsGroup[2].setPosition(FlxMath.lerp(itemsGroup[2].x, 346, 0.1), FlxMath.lerp(itemsGroup[2].y, 312, 1 - Math.pow(0.01, FlxG.elapsed)));
+                }
             }
         }
     }

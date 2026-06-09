@@ -10,7 +10,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(0, 0, PlayState, 60, 60, true));
+		addChild(new FlxGame(0, 0, PlayState, 500, 500, true));
 		addChild(new FPS(10, 10, 0x000000));
 		FlxG.fixedTimestep = false;
 		FlxG.autoPause = false;
