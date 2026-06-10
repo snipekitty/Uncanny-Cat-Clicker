@@ -4,6 +4,7 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
@@ -15,10 +16,14 @@ class PlayState extends FlxState
 	var values:Values;
 
 	var nighttime:Bool = false;
+
+	var debugText:FlxText;
 	
 	override public function create()
 	{
 		persistentUpdate = true;
+
+		debugText = new FlxText(100, 100, 0, "hello", 16);
 
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.bliss__png);
@@ -45,6 +50,8 @@ class PlayState extends FlxState
 
 		var catTreat = new CatTreat();
 		add(catTreat);
+
+		add(debugText);
 		
 		FlxG.cameras.bgColor = 0xff000000;
 
@@ -54,5 +61,6 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		debugText.text = "hunger: " + (CatClicker.hunger) + " sleep: " + (CatClicker.sleepiness) + " dirty: " + (CatClicker.dirtiness);
 	}
 }

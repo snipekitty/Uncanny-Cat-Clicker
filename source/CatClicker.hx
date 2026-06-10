@@ -23,6 +23,9 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
 	var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
 	var cannyNyeh = FlxG.sound.load(AssetPaths.nyeh__wav);
+    static var notifSound:FlxSound;
+    static var yummySound:FlxSound;
+    static var ewSound:FlxSound;
 
     var cannySounds:Array<FlxSound>;
 
@@ -32,18 +35,18 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var defaultScale:Float = 0.8;
     var concurrentFPS:FPS;
 
-    var timer:FlxTimer;
+    var statTimer:Float;
     static var thoughtBubble:FlxSprite;
 
     public static var hunger:Float;
-    public static var cleanliness:Float;
+    public static var dirtiness:Float;
     public static var sleepiness:Float;
-
     public static var canniness:Float = -0.5;
 
     static var thBubbleMsg:FlxText;
-
     static var msgTimer:FlxTimer;
+
+    var randomNumber:Int;
 
     public function new() 
     {
@@ -73,6 +76,15 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         add(thoughtBubble);
         thoughtBubble.kill();
 
+        notifSound = new FlxSound();
+        notifSound = FlxG.sound.load(AssetPaths.notification__wav);
+
+        yummySound = new FlxSound();
+        yummySound = FlxG.sound.load(AssetPaths.yummy__wav);
+
+        ewSound = new FlxSound();
+        ewSound = FlxG.sound.load(AssetPaths.ew__wav);
+
         thBubbleMsg = new FlxText(thoughtBubble.x + 40, thoughtBubble.y + 30, thoughtBubble.width - 30, "", 24);
         add(thBubbleMsg);
         thBubbleMsg.kill();
@@ -83,6 +95,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         super.update(elapsed);
         clicking();
         incrCanniness();
+        incrTimer();
 
         uncannyCat.scale.x = cannyCat.scale.x;
         uncannyCat.scale.y = cannyCat.scale.y;
@@ -158,18 +171,50 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         } 
     }
 
+    function incrTimer() 
+    {
+        statTimer += 1 * FlxG.elapsed;
+        if(statTimer >= 2)
+        {
+            increaseStats();
+            statTimer = 0;
+        }
+    }
+
     public static function checkStats()
     {
-        if(hunger < 50)
+        if(hunger < 10)
         {
             thoughtBubble.revive();
             thBubbleMsg.text = "im not hungry bro!";
             thBubbleMsg.revive();
-            trace("im not hungry");
-            FlxG.sound.load(AssetPaths.notification__wav).play(true);
+            ewSound.play(true);
             msgTimer = new FlxTimer().start(2.0, msgTimer ->{ thoughtBubble.kill(); thBubbleMsg.kill(); msgTimer.destroy; });
         } else {
-            trace("thank you bro");
+            thoughtBubble.revive();
+            thBubbleMsg.text = "thank you for feeding me";
+            thBubbleMsg.revive();
+            yummySound.play(true);
+            hunger = 0;
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ thoughtBubble.kill(); thBubbleMsg.kill(); msgTimer.destroy; });
+        }
+    }
+
+    function increaseStats()
+    {
+        randomNumber = FlxG.random.int(1, 3);
+        trace(randomNumber);
+        switch(randomNumber)
+        {
+            case 1:
+                hunger += 1 * (5 + canniness);
+                randomNumber = 0;
+            case 2:
+                dirtiness += 1 * (5 + canniness);
+                randomNumber = 0;
+            case 3:
+                sleepiness += 1 * (5 + canniness);
+                randomNumber = 0;
         }
     }
 }

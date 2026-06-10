@@ -68,16 +68,16 @@ class CareItems extends FlxTypedGroup<FlxSprite>
     {
         for(items in 0...itemsGroup.length)
         {
-            if(Std.string(itemsGroup[items].getPosition()) == defaultPositions[items])
+            if(Std.string(itemsGroup[items].getPosition()) != defaultPositions[items])
             {
-
-            } else {
                 if(FlxG.mouse.pressed == false || FlxG.mouse.overlaps(itemsGroup[items]) == false)
                 {
                     itemsGroup[0].setPosition(FlxMath.lerp(itemsGroup[0].x, 354, 0.1), FlxMath.lerp(itemsGroup[0].y, 170, 1 - Math.pow(0.01, FlxG.elapsed)));
                     itemsGroup[1].setPosition(FlxMath.lerp(itemsGroup[1].x, 330, 0.1), FlxMath.lerp(itemsGroup[1].y, 425, 1 - Math.pow(0.01, FlxG.elapsed)));
                     itemsGroup[2].setPosition(FlxMath.lerp(itemsGroup[2].x, 346, 0.1), FlxMath.lerp(itemsGroup[2].y, 312, 1 - Math.pow(0.01, FlxG.elapsed)));
                 }
+            } else {
+
             }
         }
     }
@@ -86,7 +86,7 @@ class CareItems extends FlxTypedGroup<FlxSprite>
     {
         if(catFood.overlaps(CatClicker.cannyCat))
         {
-            if(catFood.isPressed == false)
+            if(FlxG.mouse.justReleased)
             {
                 statSignal.dispatch();
                 catFood.setPosition(354, 170);
