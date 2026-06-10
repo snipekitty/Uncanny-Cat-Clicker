@@ -9,6 +9,7 @@ import flixel.group.FlxGroup;
 import flixel.input.FlxPointer;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
+import flixel.util.FlxSignal;
 
 class CareItems extends FlxTypedGroup<FlxSprite>
 {
@@ -18,6 +19,8 @@ class CareItems extends FlxTypedGroup<FlxSprite>
 
     var itemsGroup:Array<FlxSprite>;
     var defaultPositions:Array<String>;
+
+    var statSignal:FlxSignal;
 
     public function new()
     {
@@ -40,8 +43,11 @@ class CareItems extends FlxTypedGroup<FlxSprite>
         catSponge.updateHitbox();
         catSponge.draggable = true;
 
+        statSignal = new FlxSignal();
+        statSignal.add(CatClicker.checkStats);
+
         itemsGroup = [catFood, catSleep, catSponge];
-        defaultPositions = ["(x: 354 | y: 170)", "(x: 330 | y: 425)", "(x: 346 | y: 312)"];
+        defaultPositions = [/*catfood*/"(x: 354 | y: 170)", /*catsleep*/"(x: 330 | y: 425)", /*catsponge*/"(x: 346 | y: 312)"];
 
         for(items in 0...itemsGroup.length)
         {
@@ -55,6 +61,7 @@ class CareItems extends FlxTypedGroup<FlxSprite>
     {
         super.update(elapsed);
         defaultPos();
+        feeding();
     }
 
     function defaultPos()
@@ -65,12 +72,24 @@ class CareItems extends FlxTypedGroup<FlxSprite>
             {
 
             } else {
-                if(FlxG.mouse.pressed == false)
+                if(FlxG.mouse.pressed == false || FlxG.mouse.overlaps(itemsGroup[items]) == false)
                 {
                     itemsGroup[0].setPosition(FlxMath.lerp(itemsGroup[0].x, 354, 0.1), FlxMath.lerp(itemsGroup[0].y, 170, 1 - Math.pow(0.01, FlxG.elapsed)));
                     itemsGroup[1].setPosition(FlxMath.lerp(itemsGroup[1].x, 330, 0.1), FlxMath.lerp(itemsGroup[1].y, 425, 1 - Math.pow(0.01, FlxG.elapsed)));
                     itemsGroup[2].setPosition(FlxMath.lerp(itemsGroup[2].x, 346, 0.1), FlxMath.lerp(itemsGroup[2].y, 312, 1 - Math.pow(0.01, FlxG.elapsed)));
                 }
+            }
+        }
+    }
+
+    function feeding()
+    {
+        if(catFood.overlaps(CatClicker.cannyCat))
+        {
+            if(catFood.isPressed == false)
+            {
+                statSignal.dispatch();
+                catFood.setPosition(354, 170);
             }
         }
     }

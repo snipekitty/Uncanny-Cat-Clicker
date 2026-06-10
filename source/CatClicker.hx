@@ -19,7 +19,6 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
 {   
     public static var cannyCat:FlxSprite;
     var uncannyCat:FlxSprite;
-    public static var catHitBox:FlxSprite;
 
     var cannyHeh = FlxG.sound.load(AssetPaths.heh__wav);
 	var cannyNah = FlxG.sound.load(AssetPaths.nah__wav);
@@ -34,13 +33,17 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     var concurrentFPS:FPS;
 
     var timer:FlxTimer;
-    var thoughtBubble:FlxSprite;
+    static var thoughtBubble:FlxSprite;
 
-    var hunger:Float;
-    var cleanliness:Float;
-    var sleepiness:Float;
+    public static var hunger:Float;
+    public static var cleanliness:Float;
+    public static var sleepiness:Float;
 
     public static var canniness:Float = -0.5;
+
+    static var thBubbleMsg:FlxText;
+
+    static var msgTimer:FlxTimer;
 
     public function new() 
     {
@@ -69,6 +72,10 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         thoughtBubble.updateHitbox;
         add(thoughtBubble);
         thoughtBubble.kill();
+
+        thBubbleMsg = new FlxText(thoughtBubble.x + 40, thoughtBubble.y + 30, thoughtBubble.width - 30, "", 24);
+        add(thBubbleMsg);
+        thBubbleMsg.kill();
     }
 
     override public function update(elapsed:Float) 
@@ -103,7 +110,6 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             {
                 //FlxTween.cancelTweensOf(cannyCat);
                 Values.updateMilkText();
-                //FlxTween.tween(cannyCat, { "scale.x": defaultScale - 0.3, "scale.y": defaultScale - 0.3}, 0.5, { ease: FlxEase.linear });
                 cannyCat.scale.x = FlxMath.lerp(defaultScale, cannyCat.scale.x - 0.1, 1 - Math.pow(0.005, FlxG.elapsed));
                 cannyCat.scale.y = FlxMath.lerp(defaultScale, cannyCat.scale.y - 0.1, 1 - Math.pow(0.005, FlxG.elapsed));
                 playCannySounds();
@@ -150,5 +156,20 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
                 }
             }
         } 
+    }
+
+    public static function checkStats()
+    {
+        if(hunger < 50)
+        {
+            thoughtBubble.revive();
+            thBubbleMsg.text = "im not hungry bro!";
+            thBubbleMsg.revive();
+            trace("im not hungry");
+            FlxG.sound.load(AssetPaths.notification__wav).play(true);
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ thoughtBubble.kill(); thBubbleMsg.kill(); msgTimer.destroy; });
+        } else {
+            trace("thank you bro");
+        }
     }
 }
