@@ -3,17 +3,17 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import flxgif.FlxGifAsset;
-import flxgif.FlxGifSprite;
+import hxvlc.flixel.FlxVideoSprite;
 
 class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
 {
     var catNewsDisplayer:FlxSprite;
-    var newsGif:FlxGifSprite;
+    var newsGif:FlxVideoSprite;
     var gifArray:Array<String>;
 
     var scaleX:Float;
     var scaleY:Float;
+    var changeTimer:Float;
 
     public function new()
     {
@@ -22,14 +22,11 @@ class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
 		catNewsDisplayer.loadGraphic(AssetPaths.newstv__png);
 		catNewsDisplayer.setPosition(0, FlxG.height - catNewsDisplayer.height);
 
-        newsGif = new FlxGifSprite();
-        newsGif.loadGif('assets/images/gifs/wdtggg.gif');
-        newsGif.updateHitbox;
-        scaleX = 154/newsGif.width;
-        scaleY = 118/newsGif.height;
-        newsGif.setPosition(-92, 521);
-        newsGif.scale.set(scaleX, scaleY);
-        newsGif.updateHitbox;
+        gifArray = ['assets/images/gifs/wdtggg.mp4', 'assets/images/gifs/taiko.mp4'];
+
+        newsGif = new FlxVideoSprite();
+        newsGif.load(gifArray[FlxG.random.int(0, gifArray.length - 1)], [':input-repeat=1000']);
+        newsGif.play();
 
         add(newsGif);
         add(catNewsDisplayer);
@@ -38,5 +35,12 @@ class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
     override public function update(elapsed:Float) 
     {
         super.update(elapsed);
+        changeTimer += 1 * elapsed;
+        if(changeTimer > 2)
+        {
+            newsGif.load(gifArray[FlxG.random.int(0, gifArray.length - 1)], [':input-repeat=1000']);
+            newsGif.play();
+            changeTimer = 0;
+        }
     }
 }
