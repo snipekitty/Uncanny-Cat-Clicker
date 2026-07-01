@@ -5,12 +5,15 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.util.FlxSignal;
 
 class NewsTicker extends FlxTypedGroup<FlxSprite>
 {
     var newsBar:FlxSprite;
     var newsText:FlxText;
     var newsTextArray:Array<String>;
+    var newsTickerRandomNum:Int;
+    var signalNumberCh:FlxSignal;
 
     public function new()
     {
@@ -28,6 +31,9 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         newsText.pixelPerfectRender = true;
         newsText.moves = true;
         newsText.velocity.set(-200, 0);
+
+        signalNumberCh = new FlxSignal();
+        signalNumberCh.add(CatNewsDisplayer.requestedGif);
 
         newsTextArray = ["I love uncanny cat clicker!!!", //0
         "the quick brown fox might've actually not jumped over the lazy dog", //1
@@ -130,7 +136,8 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         "Sources say the cat god will come and purify which is impure.", //98
         ];
 
-        newsText.text = newsTextArray[FlxG.random.int(0, newsTextArray.length - 1)];
+        newsTickerRandomNum = FlxG.random.int(0, newsTextArray.length - 1);
+        newsText.text = newsTextArray[newsTickerRandomNum];
         newsText.updateHitbox();
 
         add(newsBar);
@@ -146,9 +153,19 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         {
             trace("you did a loop");
             newsText.x = 1400;
-            newsText.text = newsTextArray[FlxG.random.int(0, newsTextArray.length - 1)];
+            newsTickerRandomNum = 64;
+            newsText.text = newsTextArray[newsTickerRandomNum];
             newsText.updateHitbox();
         }
+
+        switch(newsTickerRandomNum)
+        {
+            case 64:
+                CatNewsDisplayer.randomNum = 2;
+                signalNumberCh.dispatch();
+                newsTickerRandomNum = 0;
+        }
+
         super.update(elapsed);
     }
 }

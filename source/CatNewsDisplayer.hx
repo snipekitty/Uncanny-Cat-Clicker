@@ -13,6 +13,7 @@ class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
     var gifArray:Array<String>;
 
     var changeTimer:Float;
+    public static var randomNum:Float;
 
     public function new()
     {
@@ -21,11 +22,11 @@ class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
 		catNewsDisplayer.loadGraphic(AssetPaths.newstv__png);
 		catNewsDisplayer.setPosition(0, FlxG.height - catNewsDisplayer.height);
 
-        gifArray = ['assets/images/gifs/wdtggg.mp4', 'assets/images/gifs/taiko.mp4'];
+        gifArray = ['assets/images/gifs/wdtggg.mp4', 'assets/images/gifs/taiko.mp4', 'assets/images/gifs/listening.mp4'];
 
         newsGif = new FlxVideoSprite();
         newsGif.setPosition(34,550);
-        newsGif.load(gifArray[FlxG.random.int(0, gifArray.length - 1)], [':input-repeat=1000']);
+        newsGif.load(gifArray[FlxG.random.int(0, gifArray.length - 2)], [':input-repeat=1000']);
         newsGif.play();
         newsGif.updateHitbox();
 
@@ -39,10 +40,14 @@ class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
         changeTimer += 1 * elapsed;
         if(changeTimer > 10)
         {
-            newsGif.load(gifArray[FlxG.random.int(0, gifArray.length - 1)], [':input-repeat=1000']);
+            newsGif.load(gifArray[/*FlxG.random.int(0, gifArray.length - 2)*/ 2], [':input-repeat=1000']);
             newsGif.play();
             changeTimer = 0;
         }
-        trace(newsGif.x + " , " + newsGif.y);
+    }
+
+    public static function requestedGif()
+    {
+        
     }
 }
