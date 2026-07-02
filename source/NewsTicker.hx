@@ -162,7 +162,7 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
                 switch(newsTickerRandomNum)
                 {
                     default:
-                        CatNewsDisplayer.randomNum = FlxG.random.int(0, 1);
+                        CatNewsDisplayer.randomNum = FlxG.random.int(0, 4);
                     case 64:
                         CatNewsDisplayer.randomNum = 2;
                 }

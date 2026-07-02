@@ -25,7 +25,7 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 	public static var shopIcon:FlxSprite;
 	static var shopIconScale:Float = 0.2;
 	public static var shopBackground:FlxSprite;
-	public static var isShopOpened:Bool = false;
+	public static var isShopOpened:Bool = true;
 
 	var cannyMeter:FlxBar;
 
@@ -103,7 +103,7 @@ class MainHud extends FlxTypedGroup<FlxBasic>
 			inTheNegatives();
 		}
 		milkText.text = (FlxMath.roundDecimal(Values.milkNum, 0) + " milk");
-		shopClicked();
+		//shopClicked();
 
 		milkText.screenCenter(X);
 		cpsText.screenCenter(X);

@@ -22,11 +22,14 @@ import hxvlc.flixel.FlxVideoSprite;
 		catNewsDisplayer.loadGraphic(AssetPaths.newstv__png);
 		catNewsDisplayer.setPosition(0, FlxG.height - catNewsDisplayer.height);
 
-        gifArray = ['assets/images/gifs/wdtggg.mp4', 
-        'assets/images/gifs/taiko.mp4', 
-        'assets/images/gifs/cat-sisyphus.mp4', 
+        gifArray = ['assets/images/gifs/wdtggg.mp4', //0
+        'assets/images/gifs/taiko.mp4', //1
+        'assets/images/gifs/catsisyphus.mp4', //2 
+        'assets/images/gifs/thevoices.mp4', //3
+        'assets/images/gifs/soggycatmoney.mp4', //4,
         /*anything beyond this point is a special gif*/ 
-        'assets/images/gifs/listening.mp4'];
+        'assets/images/gifs/listening.mp4', //3
+        ];
 
         newsGif = new FlxVideoSprite();
         newsGif.setPosition(34,550);
