@@ -6,14 +6,14 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import hxvlc.flixel.FlxVideoSprite;
 
-class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
+@:keep class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
 {
     var catNewsDisplayer:FlxSprite;
-    var newsGif:FlxVideoSprite;
-    var gifArray:Array<String>;
+    static var newsGif:FlxVideoSprite;
+    public static var gifArray:Array<String>;
 
-    var changeTimer:Float;
-    public static var randomNum:Float;
+    static var changeTimer:Float;
+    public static var randomNum:Int;
 
     public function new()
     {
@@ -22,7 +22,11 @@ class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
 		catNewsDisplayer.loadGraphic(AssetPaths.newstv__png);
 		catNewsDisplayer.setPosition(0, FlxG.height - catNewsDisplayer.height);
 
-        gifArray = ['assets/images/gifs/wdtggg.mp4', 'assets/images/gifs/taiko.mp4', 'assets/images/gifs/listening.mp4'];
+        gifArray = ['assets/images/gifs/wdtggg.mp4', 
+        'assets/images/gifs/taiko.mp4', 
+        'assets/images/gifs/cat-sisyphus.mp4', 
+        /*anything beyond this point is a special gif*/ 
+        'assets/images/gifs/listening.mp4'];
 
         newsGif = new FlxVideoSprite();
         newsGif.setPosition(34,550);
@@ -37,17 +41,11 @@ class CatNewsDisplayer extends FlxTypedGroup<FlxSprite>
     override public function update(elapsed:Float) 
     {
         super.update(elapsed);
-        changeTimer += 1 * elapsed;
-        if(changeTimer > 10)
-        {
-            newsGif.load(gifArray[/*FlxG.random.int(0, gifArray.length - 2)*/ 2], [':input-repeat=1000']);
-            newsGif.play();
-            changeTimer = 0;
-        }
     }
 
-    public static function requestedGif()
+    public static function playGif()
     {
-        
+        newsGif.load(gifArray[randomNum], [':input-repeat=1000']);
+        newsGif.play();
     }
 }

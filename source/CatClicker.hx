@@ -203,7 +203,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
     function increaseStats()
     {
         randomNumber = FlxG.random.int(1, 3);
-        trace(randomNumber);
+        //trace(randomNumber);
         switch(randomNumber)
         {
             case 1:

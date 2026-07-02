@@ -13,7 +13,7 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
     var newsText:FlxText;
     var newsTextArray:Array<String>;
     var newsTickerRandomNum:Int;
-    var signalNumberCh:FlxSignal;
+    var msgNumFix:Float;
 
     public function new()
     {
@@ -31,9 +31,6 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         newsText.pixelPerfectRender = true;
         newsText.moves = true;
         newsText.velocity.set(-200, 0);
-
-        signalNumberCh = new FlxSignal();
-        signalNumberCh.add(CatNewsDisplayer.requestedGif);
 
         newsTextArray = ["I love uncanny cat clicker!!!", //0
         "the quick brown fox might've actually not jumped over the lazy dog", //1
@@ -149,23 +146,30 @@ class NewsTicker extends FlxTypedGroup<FlxSprite>
         //trace(elapsed);
         //trace(newsText.x);
 
+        if(msgNumFix < 1)
+        {
+            msgNumFix += 1 * elapsed;
+        }
+
         if(newsText.overlaps(newsBar) == false)
         {
-            trace("you did a loop");
-            newsText.x = 1400;
-            newsTickerRandomNum = 64;
-            newsText.text = newsTextArray[newsTickerRandomNum];
-            newsText.updateHitbox();
+            if(msgNumFix > 0.5)
+            {
+                trace("you did a loop");
+                newsText.x = 1400;
+                newsTickerRandomNum = FlxG.random.int(0, newsTextArray.length - 1);
+                newsText.text = newsTextArray[newsTickerRandomNum];
+                switch(newsTickerRandomNum)
+                {
+                    default:
+                        CatNewsDisplayer.randomNum = FlxG.random.int(0, 1);
+                    case 64:
+                        CatNewsDisplayer.randomNum = 2;
+                }
+                newsText.updateHitbox();
+                CatNewsDisplayer.playGif();
+            }
         }
-
-        switch(newsTickerRandomNum)
-        {
-            case 64:
-                CatNewsDisplayer.randomNum = 2;
-                signalNumberCh.dispatch();
-                newsTickerRandomNum = 0;
-        }
-
         super.update(elapsed);
     }
 }
