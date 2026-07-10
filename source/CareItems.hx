@@ -20,7 +20,9 @@ class CareItems extends FlxTypedGroup<FlxSprite>
     var itemsGroup:Array<FlxSprite>;
     var defaultPositions:Array<String>;
 
-    var statSignal:FlxSignal;
+    var foodSignal:FlxSignal;
+    var dirtSignal:FlxSignal;
+    var sleepSignal:FlxSignal;
 
     public function new()
     {
@@ -43,8 +45,12 @@ class CareItems extends FlxTypedGroup<FlxSprite>
         catSponge.updateHitbox();
         catSponge.draggable = true;
 
-        statSignal = new FlxSignal();
-        statSignal.add(CatClicker.checkStats);
+        foodSignal = new FlxSignal();
+        foodSignal.add(CatClicker.checkFood);
+        dirtSignal = new FlxSignal();
+        dirtSignal.add(CatClicker.checkDirt);
+        sleepSignal = new FlxSignal();
+        sleepSignal.add(CatClicker.checkSleep);
 
         itemsGroup = [catFood, catSleep, catSponge];
         defaultPositions = [/*catfood*/"(x: 354 | y: 170)", /*catsleep*/"(x: 330 | y: 425)", /*catsponge*/"(x: 346 | y: 312)"];
@@ -88,8 +94,26 @@ class CareItems extends FlxTypedGroup<FlxSprite>
         {
             if(FlxG.mouse.justReleased)
             {
-                statSignal.dispatch();
+                foodSignal.dispatch();
                 catFood.setPosition(354, 170);
+            }
+        }
+
+        if(catSponge.overlaps(CatClicker.cannyCat))
+        {
+            if(FlxG.mouse.justReleased)
+            {
+                dirtSignal.dispatch();
+                catSponge.setPosition(346, 312);
+            }
+        }
+
+        if(catSleep.overlaps(CatClicker.cannyCat))
+        {
+            if(FlxG.mouse.justReleased)
+            {
+                sleepSignal.dispatch();
+                catSleep.setPosition(330, 425);
             }
         }
     }

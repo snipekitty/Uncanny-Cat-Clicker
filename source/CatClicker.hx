@@ -76,6 +76,8 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         add(thoughtBubble);
         thoughtBubble.kill();
 
+        msgTimer = new FlxTimer();
+
         notifSound = new FlxSound();
         notifSound = FlxG.sound.load(AssetPaths.notification__wav);
 
@@ -111,6 +113,12 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             trace(canniness);
         }
         #end
+
+        //trace(msgTimer.active);
+        if(msgTimer.active == false)
+        {
+            thoughtBubble.kill(); thBubbleMsg.kill();
+        }
     }
 
     function clicking() 
@@ -181,7 +189,7 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
         }
     }
 
-    public static function checkStats()
+    public static function checkFood()
     {
         if(hunger < 10)
         {
@@ -189,14 +197,52 @@ class CatClicker extends FlxTypedGroup<FlxSprite>
             thBubbleMsg.text = "im not hungry bro!";
             thBubbleMsg.revive();
             ewSound.play(true);
-            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ thoughtBubble.kill(); thBubbleMsg.kill(); msgTimer.destroy; });
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ msgTimer.destroy; });
         } else {
             thoughtBubble.revive();
             thBubbleMsg.text = "thank you for feeding me";
             thBubbleMsg.revive();
             yummySound.play(true);
             hunger = 0;
-            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ thoughtBubble.kill(); thBubbleMsg.kill(); msgTimer.destroy; });
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ msgTimer.destroy; });
+        }
+    }
+
+    public static function checkDirt()
+    {
+        if(dirtiness < 10)
+        {
+            thoughtBubble.revive();
+            thBubbleMsg.text = "im not dirty bro!";
+            thBubbleMsg.revive();
+            ewSound.play(true);
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ msgTimer.destroy; });
+        } else {
+            thoughtBubble.revive();
+            thBubbleMsg.text = "thank you for cleaning me";
+            thBubbleMsg.revive();
+            yummySound.play(true);
+            dirtiness = 0;
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ msgTimer.destroy; });
+        }
+    }
+
+    public static function checkSleep()
+    {
+        if(sleepiness < 10)
+        {
+            thoughtBubble.revive();
+            thBubbleMsg.text = "im not sleepy bro!";
+            thBubbleMsg.revive();
+            ewSound.play(true);
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{  msgTimer.destroy; });
+        } else {
+            thoughtBubble.revive();
+            thBubbleMsg.text = "thank you for sleeping me";
+            thBubbleMsg.revive();
+            yummySound.play(true);
+            sleepiness = 0;
+            msgTimer = new FlxTimer().start(2.0, msgTimer ->{ msgTimer.destroy; });
         }
     }
 
